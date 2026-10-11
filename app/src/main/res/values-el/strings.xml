@@ -1,0 +1,392 @@
+<resources>
+    <!-- App Details -->
+    <string name="app_name">KoveMirror</string>
+    <string name="header_subtitle">Kove TFT Προβολή Πλήρους Οθόνης</string>
+
+    <!-- Language Selection -->
+    <string name="label_language">🌐 Γλώσσα Εφαρμογής:</string>
+
+    <!-- UI Labels -->
+    <string name="label_select_bt_device">Επιλέξτε Συσκευή Bluetooth TFT</string>
+    <string name="label_ip_address_listening">📱 IP Τηλεφώνου (ακρόαση στη θύρα 17818):</string>
+    <string name="label_tft_target_address">↑ Διεύθυνση για σύνδεση TFT</string>
+    <string name="label_bt_device_trigger">🔵 Συσκευή Bluetooth TFT (για ενεργοποίηση WiFi):</string>
+    <string name="label_bt_device_subtext">Επιλέξτε την οθόνη TFT της μοτοσυκλέτας σας από τις συζευγμένες συσκευές</string>
+    <string name="label_resolution_padding_settings">🖥️ Ρυθμίσεις Ανάλυσης και Περιθωρίου TFT:</string>
+    <string name="label_resolution">Ανάλυση: </string>
+    <string name="label_padding">Περιθώριο (Πάνω/Κάτω): </string>
+    <string name="label_debug_log">📋 Καταγραφή Εντοπισμού Σφαλμάτων</string>
+    <string name="label_debug_terminal">Τερματικό Εντοπισμού Σφαλμάτων</string>
+    <string name="label_log_legend">🟢Επιτυχία  🔴Σφάλμα  🟠Προειδοποίηση  🔵Δεδομένα  🟣💓Παλμός  ⚪Πληροφορία</string>
+    
+    <!-- Display Modes -->
+    <string name="label_display_mode">📺 Λειτουργία Εμφάνισης:</string>
+    <string name="label_tft_resolution">🖥️ Μοντέλο / Ανάλυση Οθόνης TFT:</string>
+    <string name="mode_center_crop">🟢 Αναλογική Πλήρης Οθόνη (Center Crop - Χωρίς Μαύρα Περιθώρια)</string>
+    <string name="mode_fit">🔵 Αναλογικό με Πλαίσια (Fit - Μαύρες Λωρίδες)</string>
+    <string name="mode_stretch">🟠 Παραμορφωμένη Πλήρης Οθόνη (Stretch)</string>
+
+    <!-- Presets -->
+    <string name="preset_600x1024">600 × 1024 (Kove 800X / Κατακόρυφο Τυπικό)</string>
+    <string name="preset_480x800">480 × 800 (Kove Κατακόρυφο Μικρό)</string>
+    <string name="preset_640x1284">640 × 1284 (Kove Κατακόρυφο Μεγάλο)</string>
+    <string name="preset_1280x720">1280 × 720 (Kove Οριζόντια Οθόνη)</string>
+    <string name="preset_800x800">800 × 800 (Kove Τετράγωνη Οθόνη)</string>
+
+    <!-- WiFi States -->
+    <string name="wifi_waiting">Αναμονή για WiFi...</string>
+    <string name="wifi_gateway">Πύλη: --</string>
+    <string name="wifi_not_connected_status">⚠️ Δεν υπάρχει σύνδεση WiFi</string>
+    <string name="wifi_connected_status">✅ WiFi: %1$s</string>
+    <string name="wifi_gateway_tbox">🏍️ Πύλη (TBox): %1$s</string>
+    <string name="wifi_required_toast">⚠️ Παρακαλώ συνδεθείτε πρώτα στο WiFi της μοτοσυκλέτας</string>
+
+    <!-- BT States / Spinner Options -->
+    <string name="bt_not_supported">Το Bluetooth δεν υποστηρίζεται</string>
+    <string name="bt_off">Το Bluetooth είναι απενεργοποιημένο</string>
+    <string name="bt_permission_missing">Λείπει η άδεια</string>
+    <string name="bt_no_paired_devices">Δεν υπάρχουν συζευγμένες συσκευές</string>
+    <string name="status_connecting">Σύνδεση...</string>
+
+    <!-- Status Messages -->
+    <string name="status_ready">⏸ Έτοιμο</string>
+    <string name="status_stream_active">🔴 Ενεργή ροή</string>
+    <string name="status_stopped">⏹ Διακόπηκε</string>
+
+    <!-- Resolution Info -->
+    <string name="res_info_default">Κατακόρυφο 600×1024 (shape=6) — Kove TFT τυπικό κατακόρυφο</string>
+    <string name="res_info_format">Στόχος: %1$d×%2$d | Περιθώριο: %3$dpx</string>
+
+    <!-- Button Actions -->
+    <string name="btn_start_mirroring">▶  Έναρξη Προβολής</string>
+    <string name="btn_stop_mirroring">⏹  Διακοπή</string>
+    <string name="btn_share_logs">Κοινοποίηση Καταγραφών</string>
+    <string name="btn_ok">Κατάλαβα</string>
+
+    <!-- Security Warning -->
+    <string name="security_warning_title">Προειδοποίηση Ασφαλείας</string>
+    <string name="security_warning_msg">Εντοπίστηκε Root ή Debugger στη συσκευή σας. Αυτό ενδέχεται να επηρεάσει την ασφάλεια και τις συνδρομές της εφαρμογής. Μπορείτε να συνεχίσετε να χρησιμοποιείτε την εφαρμογή, αλλά οι συνδρομές σας θα επαληθεύονται πιο συχνά.</string>
+
+    <!-- File Sharing & Toast -->
+    <string name="log_file_not_found">Το αρχείο καταγραφής δεν βρέθηκε</string>
+    <string name="share_logs_title">Κοινοποίηση Καταγραφών</string>
+    <string name="log_share_error">Σφάλμα κατά την κοινοποίηση καταγραφής: %1$s</string>
+
+    <!-- Log Messages (UI & Activity) -->
+    <string name="log_crash_detected">🔥 ΕΝΤΟΠΙΣΤΗΚΕ ΣΦΑΛΜΑ ΣΤΗ ΣΥΣΚΕΥΗ:</string>
+    <string name="log_app_started">🏍️ KoveMirror v2.0 ξεκίνησε</string>
+    <string name="log_step_1">1. Συνδεθείτε στο WiFi της μοτοσυκλέτας</string>
+    <string name="log_step_2">2. Η IP του τηλεφώνου θα εμφανιστεί παραπάνω</string>
+    <string name="log_step_3">3. Πατήστε το κουμπί \'Έναρξη\'</string>
+    <string name="log_step_4">4. Οι καταγραφές θα εμφανιστούν μόλις συνδεθεί το TFT</string>
+    <string name="log_wifi_not_connected">⚠️ Δεν υπάρχει σύνδεση WiFi — συνδεθείτε στο hotspot της μοτοσυκλέτας</string>
+    <string name="log_phone_ip">📡 IP Τηλεφώνου: %1$s</string>
+    <string name="log_gateway">🏍️ Πύλη          : %1$s</string>
+    <string name="log_target_resolution">🖥️ Ανάλυση στόχου TFT: %1$d×%2$d | Περιθώριο: %3$dpx</string>
+    <string name="log_request_screen_capture">🔐 Αίτημα άδειας καταγραφής οθόνης...</string>
+    <string name="log_permission_granted">✅ Δόθηκε άδεια — έναρξη MirrorService</string>
+    <string name="log_service_start_failed">❌ Αποτυχία έναρξης υπηρεσίας: %1$s</string>
+    <string name="log_screen_capture_denied">❌ Απορρίφθηκε η άδεια καταγραφής οθόνης</string>
+    <string name="log_stopped_by_user">⏹️ Διακόπηκε από το χρήστη</string>
+    <string name="log_bt_permissions_missing">⚠️ Λείπουν οι άδειες Bluetooth, αδυναμία εμφάνισης συσκευών</string>
+    <string name="log_selected_bt">🔗 Επιλεγμένο Bluetooth: %1$s (%2$s)</string>
+    <string name="log_bt_permissions_granted">✅ Δόθηκαν οι άδειες Bluetooth</string>
+    <string name="log_bt_permissions_denied">⚠️ Απορρίφθηκαν ορισμένες άδειες Bluetooth</string>
+    <string name="log_padding_updated_on_the_fly">🔄 Το περιθώριο ενημερώθηκε δυναμικά: %1$dpx</string>
+
+    <!-- Notification & Service -->
+    <string name="notif_waiting_tft">⏳ Αναμονή για σύνδεση TFT...</string>
+    <string name="notif_tft_connected">🔴 TFT συνδέθηκε — Ενεργή ροή</string>
+    <string name="notif_waiting_tft_port">🟡 Αναμονή για TFT (θύρα %1$d)</string>
+    <string name="notif_action_stop">Διακοπή</string>
+    <string name="notif_channel_name">Προβολή KoveMirror</string>
+    <string name="notif_channel_description">Υπηρεσία προβολής οθόνης Kove TFT</string>
+
+    <!-- MirrorService Logs -->
+    <string name="log_mirroring_starting">▶️ Εκκίνηση προβολής...</string>
+    <string name="log_bt_mac_not_selected">⚠️ Δεν επιλέχθηκε διεύθυνση MAC Bluetooth, η ενεργοποίηση BLE απενεργοποιήθηκε</string>
+    <string name="log_searching_wifi">📡 Αναζήτηση δικτύου WiFi και σύνδεση διεργασίας...</string>
+    <string name="log_wifi_bound_process">🔗 Η διεργασία εφαρμογής συνδέθηκε επιτυχώς στο δίκτυο WiFi (bindProcessToNetwork)</string>
+    <string name="log_wifi_bound_process_legacy">🔗 Η διεργασία εφαρμογής συνδέθηκε επιτυχώς στο δίκτυο WiFi (setProcessDefaultNetwork)</string>
+    <string name="log_wifi_lost">🔌 Χάθηκε η σύνδεση δικτύου WiFi</string>
+    <string name="log_wifi_unbound">🔌 Εκκαθαρίστηκε η σύνδεση δικτύου WiFi</string>
+    <string name="log_tft_video_connected">🚀 Το TFT Βίντεο συνδέθηκε, εκκίνηση κωδικοποιητή...</string>
+    <string name="log_tft_disconnected_waiting">🔌 Το TFT αποσυνδέθηκε — αναμονή για επανασύνδεση...</string>
+    <string name="log_stopping_mirroring">⏹️ Διακοπή προβολής...</string>
+    <string name="log_all_stopped">⏹️ Όλα διακόπηκαν</string>
+
+    <!-- HeartbeatManager Logs -->
+    <string name="log_hb_started">💓 Το νήμα Heartbeat ξεκίνησε (διάστημα 2s)</string>
+    <string name="log_hb_sent">💓 Heartbeat #%1$d → %2$s</string>
+    <string name="log_hb_io_error">❌ Σφάλμα IO Heartbeat: %1$s</string>
+    <string name="log_hb_stopped">💓 Το νήμα Heartbeat διακόπηκε (συνολικά: %1$d)</string>
+
+    <!-- ProjectionEncoder Logs -->
+    <string name="log_encoder_starting">🎬 Εκκίνηση ProjectionEncoder...</string>
+    <string name="log_codec_output_res">   Ανάλυση Εξόδου Codec: %1$d×%2$d</string>
+    <string name="log_codec_ready">✅ MediaCodec έτοιμο</string>
+    <string name="log_vd_creating">🖥️ Δημιουργία VirtualDisplay...</string>
+    <string name="log_vd_ready">✅ VirtualDisplay έτοιμο (λειτουργία %1$s)</string>
+    <string name="log_encoder_init_error">❌ Σφάλμα αρχικοποίησης encoder: %1$s</string>
+    <string name="log_codec_not_init">❌ Το Codec δεν αρχικοποιήθηκε - κλήθηκε το init();</string>
+    <string name="log_encoding_loop_started">🎬 Ο βρόχος κωδικοποίησης H.264 ξεκίνησε</string>
+    <string name="log_eos_received">🎬 Ελήφθη EOS - η κωδικοποίηση ολοκληρώθηκε</string>
+    <string name="log_encoding_error">❌ Σφάλμα κωδικοποίησης: %1$s</string>
+    <string name="log_encoding_loop_finished">🎬 Ο βρόχος κωδικοποίησης ολοκληρώθηκε (%1$d frames)</string>
+    <string name="log_encoder_stopped">🎬 Το ProjectionEncoder διακόπηκε</string>
+    <string name="log_vd_recreating">🔄 Επαναδημιουργία VirtualDisplay... (Νέο Περιθώριο: %1$dpx, Ανάλυση: %2$d×%3$d)</string>
+
+    <!-- TcpServer Logs -->
+    <string name="log_tcp_all_closed">🔌 Όλοι οι διακομιστές θυρών TCP έκλεισαν</string>
+    <string name="log_write_data_error">❌ Σφάλμα writeData (Βίντεο): %1$s</string>
+    <string name="log_video_socket_opened">✅ Το Video ServerSocket άνοιξε → ΘΥΡΑ %1$d</string>
+    <string name="log_tft_video_connected_ip">🔌 Το TFT Βίντεο/Προβολή συνδέθηκε! → %1$s:%2$d</string>
+    <string name="log_video_accept_error">❌ Σφάλμα αποδοχής βίντεο: %1$s</string>
+    <string name="log_video_bind_error">❌ Σφάλμα σύνδεσης Video ServerSocket (Θύρα %1$d): %2$s</string>
+    <string name="log_tft_video_conn_lost">🔌 Η σύνδεση TFT Βίντεο χάθηκε</string>
+    <string name="log_control_socket_opened">✅ Το Control ServerSocket άνοιξε → ΘΥΡΑ %1$d</string>
+    <string name="log_tft_control_connected_ip">🔌 Το TFT Control συνδέθηκε! → %1$s:%2$d</string>
+    <string name="log_control_bind_error">❌ Σφάλμα σύνδεσης Control ServerSocket (Θύρα %1$d): %2$s</string>
+    <string name="log_sending_tuc_query">📤 Αποστολή ερωτήματος TUC GET στο TFT...</string>
+    <string name="log_control_handshake_done">✅ Η χειραψία Control ολοκληρώθηκε με επιτυχία!</string>
+    <string name="log_tft_control_conn_lost">🔌 Η σύνδεση TFT Control χάθηκε</string>
+    <string name="log_binary_handshake_sent">📤 Απεστάλησαν πακέτα χειραψίας binary θύρας Control</string>
+    <string name="log_hb_socket_opened">✅ Το Heartbeat ServerSocket άνοιξε → ΘΥΡΑ %1$d</string>
+    <string name="log_tft_dedicated_hb_connected">🔌 Το TFT Dedicated Heartbeat συνδέθηκε! → %1$s:%2$d</string>
+    <string name="log_dedicated_hb_started">💓 Η αποστολή Dedicated Heartbeat ξεκίνησε (15457, διάστημα 200ms)</string>
+    <string name="log_dedicated_hb_stopped">⚠️ Η αποστολή Dedicated Heartbeat διακόπηκε: %1$s</string>
+
+    <!-- BleManager Logs -->
+    <string name="log_ble_conn_starting">🔵 Εκκίνηση σύνδεσης Bluetooth BLE: %1$s</string>
+    <string name="log_ble_not_supported">❌ Το Bluetooth δεν υποστηρίζεται</string>
+    <string name="log_ble_invalid_mac">❌ Μη έγκυρη διεύθυνση MAC: %1$s</string>
+    <string name="log_ble_disconnected">🔴 Η σύνδεση Bluetooth BLE διακόπηκε</string>
+
+    <!-- Χάρτης & Διαδρομές -->
+    <string name="btn_open_map">🗺️  Χάρτης &amp; Διαδρομή</string>
+    <string name="map_title">🗺️ Χάρτης &amp; Παρακολούθηση Διαδρομών</string>
+    <string name="map_layer_maps">🗺️ Χάρτης OSM</string>
+    <string name="map_layer_topo">🏔️ OpenTopo</string>
+    <string name="map_layer_sat">🛰️ Δορυφόρος Esri</string>
+    <string name="map_layer_google_maps">🗺️ Google Maps</string>
+    <string name="map_layer_google_sat">🛰️ Δορυφόρος Google (Καθαρός)</string>
+    <string name="map_layer_google_hybrid">🛰️ Υβριδικός Google</string>
+    <string name="map_layer_offline">📂 Χάρτης χωρίς σύνδεση (.map)</string>
+    <string name="map_layer_3d">3D</string>
+    <string name="map_3d_offline">⬇️ Χωρίς σύνδεση</string>
+    <string name="map_3d_loading">🌍 Φόρτωση χάρτη 3D…</string>
+    <string name="toast_select_offline_map">Επιλέξτε ένα αρχείο OpenAndroMaps (.map)</string>
+    <string name="toast_offline_map_loaded">✅ Φορτώθηκε ο χάρτης χωρίς σύνδεση: %1$s</string>
+    <string name="error_invalid_map_file">❌ Μη έγκυρο ή μη αναγνώσιμο αρχείο .map</string>
+    <string name="map_label_scale_title">🔤 Μέγεθος Κειμένου Χάρτη</string>
+    <string name="map_layer_osm">🗺️ OSM</string>
+    <string name="map_layer_satellite">🛰️ Δορυφόρος</string>
+    <string name="map_btn_import">📂 Εισαγωγή</string>
+    <string name="map_btn_routes">📋 Διαδρομές</string>
+    <string name="map_btn_gps">📍 GPS</string>
+    <string name="map_btn_gps_on">📍 GPS ON</string>
+    <string name="map_btn_back">Πίσω</string>
+    <string name="map_btn_close">Κλείσιμο</string>
+    <string name="map_btn_favorites">⭐ Αγαπημένα</string>
+    <string name="btn_add_favorite">⭐ Αγαπημένο</string>
+    <string name="dialog_favorites_title">⭐ Αγαπημένα &amp; Αναζήτηση</string>
+    <string name="search_address_hint">Αναζήτηση διεύθυνσης ή τοποθεσίας...</string>
+    <string name="btn_search">Αναζήτηση</string>
+    <string name="label_saved_favorites">Αποθηκευμένα Αγαπημένα</string>
+    <string name="label_search_results">Αποτελέσματα Αναζήτησης</string>
+    <string name="toast_favorite_saved">✅ Αγαπημένο αποθηκεύτηκε: %1$s</string>
+    <string name="toast_favorite_deleted">🗑️ Αγαπημένο διαγράφηκε</string>
+    <string name="dialog_save_fav_title">Αποθήκευση Αγαπημένης Τοποθεσίας</string>
+    <string name="dialog_save_fav_prompt">Εισαγάγετε ένα όνομα για αυτήν την τοποθεσία:</string>
+    <string name="no_favorites_yet">Δεν υπάρχουν ακόμη αποθηκευμένα αγαπημένα</string>
+    <string name="no_results_found">Δεν βρέθηκαν αποτελέσματα αναζήτησης</string>
+    <string name="map_btn_cancel">Ακύρωση</string>
+    <string name="map_btn_apply">Εφαρμογή</string>
+    <string name="map_loaded_routes">Φορτωμένες Διαδρομές</string>
+    <string name="map_route_style_title">Στυλ Διαδρομής</string>
+    <string name="map_route_color">Χρώμα:</string>
+    <string name="map_route_width">Πάχος:</string>
+    <string name="map_route_preview">Προεπισκόπηση:</string>
+    <string name="map_route_toggle_visibility">Εναλλαγή Ορατότητας</string>
+    <string name="map_route_delete">Διαγραφή Διαδρομής</string>
+    <string name="btn_clear_all_imported">🗑️ Καθαρισμός Όλων</string>
+    <string name="map_import_success">✅ Εισήχθησαν %1$d διαδρομή(ές)</string>
+    <string name="map_import_no_routes">⚠️ Δεν βρέθηκαν διαδρομές στο αρχείο</string>
+    <string name="map_import_unsupported_format">⚠️ Μη υποστηριζόμενη μορφή αρχείου (%1$s). Παρακαλώ επιλέξτε αρχείο .gpx, .kml ή .kmz.</string>
+    <string name="map_import_error">❌ Σφάλμα εισαγωγής: %1$s</string>
+    <string name="map_gps_permission_denied">⚠️ Η άδεια τοποθεσίας απορρίφθηκε</string>
+    <string name="map_waiting_gps">📍 Αναμονή για σήμα GPS…</string>
+
+    <!-- Map & Cursor Customization -->
+    <string name="map_settings_dialog_title">⚙️ Ρυθμίσεις Χάρτη &amp; Δείκτη</string>
+    <string name="map_route_settings_title">⚙️ Ρυθμίσεις Διαδρομής &amp; Δεικτών</string>
+    <string name="map_route_line_color">🎨 Χρώμα Γραμμής Διαδρομής:</string>
+    <string name="map_route_line_width_format">Πάχος: %1$dpx</string>
+    <string name="map_route_show_arrows">⬆️ Εμφάνιση Βελών Κατεύθυνσης</string>
+    <string name="map_route_arrow_color">Χρώμα Βέλους Κατεύθυνσης:</string>
+    <string name="map_route_show_distance">📍 Εμφάνιση Δεικτών Απόστασης (km)</string>
+    <string name="map_route_distance_interval">Διάστημα Απόστασης:</string>
+    <string name="map_route_reversed_toast">🔄 Η κατεύθυνση του %1$s αντιστράφηκε</string>
+    <string name="map_route_reverse_btn">Αντιστροφή Διαδρομής</string>
+    <string name="color_red">🔴 Κόκκινο</string>
+    <string name="color_orange">🟠 Πορτοκαλί</string>
+    <string name="color_yellow">🟡 Κίτρινο</string>
+    <string name="color_green">🟢 Πράσινο</string>
+    <string name="color_blue">🔵 Μπλε</string>
+    <string name="color_purple">🟣 Μοβ</string>
+    <string name="color_pink">🩷 Ροζ</string>
+    <string name="color_white">⚪ Λευκό</string>
+    <string name="color_cyan">🩵 Κυανό</string>
+    <string name="color_lime">🍏 Λαχανί</string>
+    <string name="label_map_theme">Θέμα Χάρτη:</string>
+    <string name="map_theme_day">☀️ Ημέρα</string>
+    <string name="map_theme_night">🌙 Νύχτα</string>
+    <string name="map_theme_auto">🌗 Αυτόματο</string>
+    <string name="label_cursor_shape">Σχήμα Δείκτη:</string>
+    <string name="label_cursor_color">Χρώμα Δείκτη:</string>
+    <string name="label_cursor_preview">Προεπισκόπηση Δείκτη:</string>
+    <string name="label_recording_color">Χρώμα Εγγραφής Διαδρομής:</string>
+    <string name="btn_open_tft_padding">🖼️ Ρυθμίσεις Πλαισίου TFT</string>
+    <string name="cursor_shape_arrow">⬆️ Βέλος Πλοήγησης</string>
+    <string name="cursor_shape_motorcycle">🏍️ Μοτοσυκλέτα</string>
+    <string name="cursor_shape_circle">🟢 Κύκλος</string>
+    <string name="cursor_shape_crosshair">🎯 Στόχος</string>
+    <string name="cursor_shape_pin">📍 Πινέζα</string>
+
+    <!-- GPX Track Recording -->
+    <string name="map_btn_record_start">🔴 Εγγραφή</string>
+    <string name="gpx_export_title">💾 Αποθήκευση Διαδρομής GPX</string>
+    <string name="label_gpx_filename">Όνομα Αρχείου:</string>
+    <string name="label_gpx_line_color">Χρώμα Γραμμής Διαδρομής:</string>
+    <string name="btn_gpx_save">Αποθήκευση GPX</string>
+    <string name="btn_gpx_discard">Απόρριψη</string>
+    <string name="toast_gpx_saved">✅ Η διαδρομή GPX αποθηκεύτηκε στις Λήψεις: %1$s</string>
+    <string name="dialog_exit_recording_title">⚠️ Ενεργή Εγγραφή Διαδρομής</string>
+    <string name="dialog_exit_recording_msg">Η εγγραφή διαδρομής βρίσκεται σε εξέλιξη. Θέλετε να τη διακόψετε και να την αποθηκεύσετε;</string>
+    <string name="btn_stop_and_save">Διακοπή &amp; Αποθήκευση</string>
+    <string name="btn_keep_recording">Συνέχιση Εγγραφής</string>
+
+    <!-- Turn-by-Turn Navigation -->
+    <string name="nav_start_navigation">▶ Έναρξη Πλοήγησης</string>
+    <string name="nav_route_options">⚙️ Επιλογές</string>
+    <string name="nav_avoid_tolls">Αποφυγή Διοδίων</string>
+    <string name="nav_toll_roads_toggle">🛣️ Διόδια</string>
+    <string name="nav_avoid_highways">Αποφυγή Αυτοκινητοδρόμων</string>
+    <string name="nav_route_preference">Προτίμηση Διαδρομής:</string>
+    <string name="nav_type_fastest">⚡ Γρηγορότερη</string>
+    <string name="nav_type_shortest">📏 Μικρότερη</string>
+    <string name="nav_stop">Διακοπή</string>
+    <string name="nav_destination_selected">📍 Επιλέχθηκε Προορισμός</string>
+    <string name="nav_arrived">🎉 Φτάσατε στον προορισμό σας!</string>
+    <string name="nav_calculating">Υπολογισμός διαδρομής…</string>
+    <string name="nav_recalculating">Επαναυπολογισμός διαδρομής…</string>
+    <string name="nav_rem_format">Υπόλοιπο: %1$s (%2$.1f km)</string>
+    <string name="label_initial_total_time">Σύνολο: %1$s</string>
+    <string name="label_remaining_time">Υπόλοιπο: %1$s (%2$.1f km)</string>
+    <string name="unit_hours">ώ</string>
+    <string name="unit_minutes">λεπ</string>
+    <string name="duration_format_hours_mins">%1$d %2$s %3$d %4$s</string>
+    <string name="duration_format_mins">%1$d %2$s</string>
+
+    <!-- Επιλογή Λειτουργίας -->
+    <string name="label_app_mode">🎮 Λειτουργία Εφαρμογής:</string>
+    <string name="mode_mirroring">📺 Κατοπτρισμός Οθόνης</string>
+    <string name="mode_virtual_display">🖥️ Κατοπτρισμός Εικονικής Οθόνης</string>
+    <string name="mode_control_only">🎮 Μόνο Έλεγχος</string>
+    <string name="label_select_target_app">📱 Επιλογή Εφαρμογής για Εικονική Οθόνη:</string>
+    <string name="option_internal_map">🗺️ Εσωτερικός Χάρτης KoveMirror OSM &amp; Πίνακας</string>
+    <string name="btn_select_language">🌐 Γλώσσα: %1$s</string>
+    <string name="btn_select_bt_device">📶 Bluetooth: %1$s</string>
+    <string name="bt_device_none">Δεν Επιλέχθηκε</string>
+
+    <!-- Λειτουργία Μόνο Ελέγχου -->
+    <string name="btn_start_controller">▶  Εκκίνηση Ελέγχου</string>
+    <string name="btn_stop_controller">⏹  Διακοπή Ελέγχου</string>
+    <string name="status_control_active">🎮 Έλεγχος Τιμονιού Ενεργός</string>
+    <string name="notif_control_only_active">🎮 Έλεγχος Τιμονιού Ενεργός</string>
+
+    <!-- Κουμπιά Δικαιωμάτων -->
+    <string name="btn_overlay_permission">⚠️ Άδεια Overlay</string>
+    <string name="btn_overlay_granted">✅ Overlay OK</string>
+    <string name="btn_accessibility_permission">⚠️ Ενεργοποίηση Προσβασιμότητας</string>
+    <string name="btn_accessibility_granted">✅ Προσβασιμότητα OK</string>
+    <string name="permission_required_title">Απαιτείται Άδεια</string>
+    <string name="overlay_permission_required_msg">Απαιτείται άδεια overlay για εμφάνιση του μενού τιμονιού πάνω από άλλες εφαρμογές. Παρακαλώ δώστε την άδεια \"Εμφάνιση πάνω από άλλες εφαρμογές\".</string>
+    <string name="btn_grant_permission">Παραχώρηση Άδειας</string>
+    <string name="toast_enable_accessibility">Παρακαλώ ενεργοποιήστε τον \"KoveMirror Έλεγχο Τιμονιού\" στις ρυθμίσεις Προσβασιμότητας</string>
+
+    <!-- Υπηρεσία Προσβασιμότητας -->
+    <string name="accessibility_service_description">Ο Έλεγχος Τιμονιού KoveMirror σας επιτρέπει να ελέγχετε εφαρμογές στο τηλέφωνό σας με τα κουμπιά τιμονιού της μοτοσικλέτας σας (ζουμ, μετακίνηση, μέσα, ένταση, εναλλαγή εφαρμογών).</string>
+
+    <!-- Handlebar Mode Names -->
+    <string name="handlebar_mode_title">🎮 Μενού Τιμονιού</string>
+    <string name="handlebar_mode_my_location">Επιστροφή στη τοποθεσία μου [ENT]</string>
+    <string name="handlebar_mode_toggle_3d">Εναλλαγή Χάρτη 3D / 2D [ENT]</string>
+    <string name="handlebar_mode_zoom">Μεγέθυνση / Σμίκρυνση</string>
+    <string name="handlebar_mode_pan_vertical">Μετακίνηση Πάνω / Κάτω</string>
+    <string name="handlebar_mode_pan_horizontal">Μετακίνηση Αριστερά / Δεξιά</string>
+    <string name="handlebar_mode_media_track">Επόμενο / Προηγούμενο Κομμάτι</string>
+    <string name="handlebar_mode_volume">Αύξηση / Μείωση Έντασης</string>
+    <string name="handlebar_mode_play">Αναπαραγωγή [ENT]</string>
+    <string name="handlebar_mode_pause">Παύση [ENT]</string>
+    <string name="handlebar_mode_app_switch">Επόμενη / Προηγούμενη Εφαρμογή</string>
+    <string name="handlebar_mode_relaunch_stream">Επανεκκίνηση Ροής [ENT]</string>
+
+    <!-- Handlebar Toasts -->
+    <string name="toast_handlebar_mode_assigned">✅ Λειτουργία Τιμονιού: %1$s</string>
+    <string name="toast_my_location">📍 Επιστροφή στη τοποθεσία μου</string>
+    <string name="toast_relaunching_stream">🚀 Επανεκκίνηση Ροής Βίντεο...</string>
+
+    <!-- TFT Frame Fit Dialog -->
+    <string name="btn_tft_fit">Ρυθμίσεις Πλαισίου TFT</string>
+    <string name="btn_tft_padding_settings">📺 Ρυθμίσεις Μαύρου Πλαισίου TFT</string>
+    <string name="tft_fit_dialog_title">📺 Ρύθμιση Πλαισίου TFT</string>
+    <string name="tft_fit_dialog_description">Ρυθμίστε τα μαύρα πλαίσια πάνω και κάτω για ευθυγράμμιση του χάρτη με την οθόνη TFT:</string>
+    <string name="tft_fit_top_label">Πάνω Μαύρο Πλαίσιο: %1$d dp</string>
+    <string name="tft_fit_bottom_label">Κάτω Μαύρο Πλαίσιο: %1$d dp</string>
+    <string name="tft_fit_reset">Επαναφορά</string>
+    <string name="btn_cancel">Ακύρωση</string>
+    <string name="tft_fit_save">Αποθήκευση &amp; Κλείσιμο</string>
+    <string name="toast_tft_fit_saved">✅ Πλαίσιο TFT Αποθηκεύτηκε</string>
+
+    <!-- Σχετικά & Debug Toggle -->
+    <string name="btn_about">ℹ️ Σχετικά</string>
+    <string name="about_dialog_title">Σχετικά με το KoveMirror</string>
+    <string name="about_developer_credit">Σχεδιάστηκε και αναπτύχθηκε από τον H. Nakturk</string>
+    <string name="btn_toggle_debug_show">📋 Εμφάνιση Terminal Debug</string>
+    <string name="btn_toggle_debug_hide">📋 Απόκρυψη Terminal Debug</string>
+
+    <!-- Γείωση Οθόνης (Εξοικονόμηση Ενέργειας) -->
+    <string name="btn_screen_dim_off">🔆 Οθόνη: Κανονική</string>
+    <string name="btn_screen_dim_on">🌑 Οθόνη: Γειωμένη</string>
+    <string name="toast_screen_dimmed">🌑 Η οθόνη γειώθηκε για εξοικονόμηση ενέργειας. Η αντικατοπτρισμός συνεχίζει.</string>
+    <string name="toast_screen_bright">🔆 Η φωτεινότητα οθόνης αποκαταστάθηκε.</string>
+
+    <!-- Καιρός Διαδρομής -->
+    <string name="toast_route_weather_on">🌤️ Πρόγνωση Καιρού Διαδρομής Ενεργή</string>
+    <string name="toast_route_weather_off">🌤️ Πρόγνωση Καιρού Διαδρομής Ανενεργή</string>
+    <string name="weather_temperature">🌡️ Θερμοκρασία: %1$.1f°C</string>
+    <string name="weather_precipitation_prob">💧 Πιθανότητα Βροχής: %1$d%% (%2$.1f mm)</string>
+    <string name="weather_wind">💨 Άνεμος: %1$.1f km/h</string>
+    <string name="weather_distance_from_start">📍 Από την Αφετηρία: %1$.1f km</string>
+
+    <!-- Προειδοποιήσεις Επικίνδυνων Στροφών -->
+    <string name="label_curve_warnings_section">🏍️ Προειδοποιήσεις Επικίνδυνων Στροφών</string>
+    <string name="label_curve_warnings_title">Δείκτες Κλειστών Στροφών</string>
+    <string name="label_curve_warnings_desc">Χρωματικοί δείκτες στροφών πάνω στο χάρτη</string>
+    <string name="curve_hairpin">Κλειστή Στροφή (Φουρκέτα)</string>
+    <string name="curve_sharp_left">Απότομη Αριστερή Στροφή</string>
+    <string name="curve_sharp_right">Απότομη Δεξιά Στροφή</string>
+    <string name="curve_medium_left">Μέτρια Αριστερή Στροφή</string>
+    <string name="curve_medium_right">Μέτρια Δεξιά Στροφή</string>
+    <string name="curve_turn_angle">📐 Γωνία Στροφής: %1$d°</string>
+
+    <!-- Modern Ρυθμίσεις UI -->
+    <string name="label_live_preview">ΖΩΝΤΑΝΗ ΠΡΟΕΠΙΣΚΟΠΗΣΗ ΧΑΡΤΗ &amp; ΔΡΟΜΕΑ</string>
+    <string name="label_driving_features">🛡️ Λειτουργίες Οδήγησης &amp; Ασφάλειας</string>
+    <string name="label_route_weather_title">Καιρός Διαδρομής</string>
+    <string name="label_route_weather_desc">Δείκτες θερμοκρασίας και βροχής στη διαδρομή</string>
+    <string name="label_tft_settings_title">📺 Περιθώρια Οθόνης TFT Μοτοσυκλέτας</string>
+    <string name="label_tft_settings_desc">Ρυθμίστε τα μαύρα περιθώρια πάνω και κάτω</string>
+    <string name="btn_save_settings">💾 Αποθήκευση &amp; Εφαρμογή</string>
+</resources>

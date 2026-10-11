@@ -1,0 +1,391 @@
+<resources>
+    <!-- App Details -->
+    <string name="app_name">KoveMirror</string>
+    <string name="header_subtitle">Kove TFT Tam Ekran Yansıtma</string>
+
+    <!-- Language Selection -->
+    <string name="label_language">🌐 Uygulama Dili:</string>
+
+    <!-- UI Labels -->
+    <string name="label_select_bt_device">TFT Bluetooth Cihazını Seçin</string>
+    <string name="label_ip_address_listening">📱 Telefon IP (port 17818\'de dinliyor):</string>
+    <string name="label_tft_target_address">↑ TFT bağlanacak adres</string>
+    <string name="label_bt_device_trigger">🔵 TFT Bluetooth Cihazı (WiFi\'yi tetiklemek için):</string>
+    <string name="label_bt_device_subtext">Eşleşmiş cihazlardan motosikletinizin TFT ekranını seçin</string>
+    <string name="label_resolution_padding_settings">🖥️ TFT Çözünürlük ve Kenar Boşluğu Ayarları:</string>
+    <string name="label_resolution">Çözünürlük: </string>
+    <string name="label_padding">Kenar Boşluğu (Top/Bottom): </string>
+    <string name="label_debug_log">📋 Debug Log</string>
+    <string name="label_debug_terminal">Hata Ayıklama Terminali</string>
+    <string name="label_log_legend">🟢Başarı  🔴Hata  🟠Uyarı  🔵Veri  🟣💓Heartbeat  ⚪Bilgi</string>
+    
+    <!-- Display Modes -->
+    <string name="label_display_mode">📺 Ekran Modu:</string>
+    <string name="label_tft_resolution">🖥️ TFT Çözünürlüğü:</string>
+    <string name="mode_center_crop">🟢 Center Crop (Tam Ekran)</string>
+    <string name="mode_fit">🔵 Fit (Kenarlıklı)</string>
+    <string name="mode_stretch">🟠 Stretch (Esnetilmiş)</string>
+
+    <!-- Presets -->
+    <string name="preset_600x1024">600×1024 (Kove 800X)</string>
+    <string name="preset_480x800">480×800 (Dikey Küçük)</string>
+    <string name="preset_640x1284">640×1284 (Dikey Büyük)</string>
+    <string name="preset_1280x720">1280×720 (Yatay)</string>
+    <string name="preset_800x800">800×800 (Kare Ekran)</string>
+
+    <!-- WiFi States -->
+    <string name="wifi_waiting">WiFi bekleniyor...</string>
+    <string name="wifi_gateway">Gateway: --</string>
+    <string name="wifi_not_connected_status">⚠️ WiFi bağlı değil</string>
+    <string name="wifi_connected_status">✅ WiFi: %1$s</string>
+    <string name="wifi_gateway_tbox">🏍️ Gateway (TBox): %1$s</string>
+    <string name="wifi_required_toast">⚠️ Lütfen önce motosiklet WiFi\'sine bağlanın</string>
+
+    <!-- BT States / Spinner Options -->
+    <string name="bt_not_supported">Bluetooth Desteklenmiyor</string>
+    <string name="bt_off">Bluetooth Kapalı</string>
+    <string name="bt_permission_missing">İzin Eksik</string>
+    <string name="bt_no_paired_devices">Eşleşmiş cihaz yok</string>
+    <string name="status_connecting">Bağlanıyor...</string>
+
+    <!-- Status Messages -->
+    <string name="status_ready">⏸ Hazır</string>
+    <string name="status_stream_active">🔴 Stream aktif</string>
+    <string name="status_stopped">⏹ Durduruldu</string>
+
+    <!-- Resolution Info -->
+    <string name="res_info_default">Dikey 600×1024 (shape=6) — Kove TFT standart dikey</string>
+    <string name="res_info_format">Hedef: %1$d×%2$d | Boşluk: %3$dpx</string>
+
+    <!-- Button Actions -->
+    <string name="btn_start_mirroring">▶  Yansıtmayı Başlat</string>
+    <string name="btn_stop_mirroring">⏹  Durdur</string>
+    <string name="btn_share_logs">Logları Paylaş</string>
+    <string name="btn_ok">Anladım</string>
+
+    <!-- Security Warning -->
+    <string name="security_warning_title">Güvenlik Uyarısı</string>
+    <string name="security_warning_msg">Cihazınızda Root veya Debugger tespit edildi. Bu durum uygulamanın güvenlik ve abonelik altyapısını etkileyebilir. Uygulamayı kullanmaya devam edebilirsiniz ancak abonelikleriniz daha sık doğrulanacaktır.</string>
+
+    <!-- File Sharing & Toast -->
+    <string name="log_file_not_found">Log dosyası bulunamadı</string>
+    <string name="share_logs_title">Logları Paylaş</string>
+    <string name="log_share_error">Log paylaşılırken hata oluştu: %1$s</string>
+
+    <!-- Log Messages (UI & Activity) -->
+    <string name="log_crash_detected">🔥 CİHAZDA ÇÖKME TESPİT EDİLDİ:</string>
+    <string name="log_app_started">🏍️ KoveMirror v2.0 başlatıldı</string>
+    <string name="log_step_1">1. Motosiklet WiFi\'sine bağlanın</string>
+    <string name="log_step_2">2. Telefon IP\'si yukarıda görünecek</string>
+    <string name="log_step_3">3. \'Başlat\' butonuna basın</string>
+    <string name="log_step_4">4. TFT bağlanınca debug log dolacak</string>
+    <string name="log_wifi_not_connected">⚠️ WiFi bağlı değil — motosiklet hotspot\'una bağlanın</string>
+    <string name="log_phone_ip">📡 Telefon IP: %1$s</string>
+    <string name="log_gateway">🏍️ Gateway   : %1$s</string>
+    <string name="log_target_resolution">🖥️ TFT hedef çözünürlüğü: %1$d×%2$d | Kenar Boşluğu: %3$dpx</string>
+    <string name="log_request_screen_capture">🔐 Ekran yakalama izni isteniyor...</string>
+    <string name="log_permission_granted">✅ İzin alındı — MirrorService başlatılıyor</string>
+    <string name="log_service_start_failed">❌ Servis başlatılamadı: %1$s</string>
+    <string name="log_screen_capture_denied">❌ Ekran yakalama izni reddedildi</string>
+    <string name="log_stopped_by_user">⏹️ Kullanıcı tarafından durduruldu</string>
+    <string name="log_bt_permissions_missing">⚠️ Bluetooth izinleri eksik, cihaz listelenemedi</string>
+    <string name="log_selected_bt">🔗 Seçilen Bluetooth: %1$s (%2$s)</string>
+    <string name="log_bt_permissions_granted">✅ Bluetooth izinleri alındı</string>
+    <string name="log_bt_permissions_denied">⚠️ Bazı Bluetooth izinleri reddedildi</string>
+    <string name="log_padding_updated_on_the_fly">🔄 Kenar boşluğu anlık olarak güncellendi: %1$dpx</string>
+
+    <!-- Notification & Service -->
+    <string name="notif_waiting_tft">⏳ TFT bağlantısı bekleniyor...</string>
+    <string name="notif_tft_connected">🔴 TFT bağlı — Stream aktif</string>
+    <string name="notif_waiting_tft_port">🟡 TFT bekleniyor (port %1$d)</string>
+    <string name="notif_action_stop">Durdur</string>
+    <string name="notif_channel_name">KoveMirror Yansıtma</string>
+    <string name="notif_channel_description">Kove TFT ekran yansıtma servisi</string>
+
+    <!-- MirrorService Logs -->
+    <string name="log_mirroring_starting">▶️ Yansıtma başlatılıyor...</string>
+    <string name="log_bt_mac_not_selected">⚠️ Bluetooth MAC adresi seçilmemiş, BLE tetikleme devre dışı</string>
+    <string name="log_searching_wifi">📡 WiFi ağı aranıyor ve süreç bağlanmaya hazırlanıyor...</string>
+    <string name="log_wifi_bound_process">🔗 Uygulama süreci başarıyla WiFi ağına bağlandı (bindProcessToNetwork)</string>
+    <string name="log_wifi_bound_process_legacy">🔗 Uygulama süreci başarıyla WiFi ağına bağlandı (setProcessDefaultNetwork)</string>
+    <string name="log_wifi_lost">🔌 WiFi ağ bağlantısı koptu, ağ bağı kaldırıldı</string>
+    <string name="log_wifi_unbound">🔌 WiFi ağ bağı temizlendi</string>
+    <string name="log_tft_video_connected">🚀 TFT Video bağlandı, encoder başlatılıyor...</string>
+    <string name="log_tft_disconnected_waiting">🔌 TFT koptu — yeniden bağlantı bekleniyor...</string>
+    <string name="log_stopping_mirroring">⏹️ Yansıtma durduruluyor...</string>
+    <string name="log_all_stopped">⏹️ Tümü durduruldu</string>
+
+    <!-- HeartbeatManager Logs -->
+    <string name="log_hb_started">💓 Heartbeat thread başlatıldı (2s aralık)</string>
+    <string name="log_hb_sent">💓 Heartbeat #%1$d → %2$s</string>
+    <string name="log_hb_io_error">❌ Heartbeat IO hatası: %1$s</string>
+    <string name="log_hb_stopped">💓 Heartbeat thread durduruldu (toplam: %1$d)</string>
+
+    <!-- ProjectionEncoder Logs -->
+    <string name="log_encoder_starting">🎬 ProjectionEncoder başlatılıyor...</string>
+    <string name="log_codec_output_res">   Codec Çıkış Çözünürlüğü: %1$d×%2$d</string>
+    <string name="log_codec_ready">✅ MediaCodec hazır</string>
+    <string name="log_vd_creating">🖥️ VirtualDisplay oluşturuluyor...</string>
+    <string name="log_vd_ready">✅ VirtualDisplay hazır (%1$s modu)</string>
+    <string name="log_encoder_init_error">❌ Encoder başlatma hatası: %1$s</string>
+    <string name="log_codec_not_init">❌ Codec başlatılmamış - init() çağrıldı mı?</string>
+    <string name="log_encoding_loop_started">🎬 H.264 encoding döngüsü başladı</string>
+    <string name="log_eos_received">🎬 EOS alındı - encoding sona erdi</string>
+    <string name="log_encoding_error">❌ Encoding hatası: %1$s</string>
+    <string name="log_encoding_loop_finished">🎬 Encoding döngüsü sona erdi (%1$d frame)</string>
+    <string name="log_encoder_stopped">🎬 ProjectionEncoder durduruldu</string>
+    <string name="log_vd_recreating">🔄 VirtualDisplay yeniden oluşturuluyor... (Yeni Boşluk: %1$dpx, Çözünürlük: %2$d×%3$d)</string>
+
+    <!-- TcpServer Logs -->
+    <string name="log_tcp_all_closed">🔌 Tüm TCP port sunucuları kapatıldı</string>
+    <string name="log_write_data_error">❌ writeData hatası (Video): %1$s</string>
+    <string name="log_video_socket_opened">✅ Video ServerSocket açıldı → PORT %1$d</string>
+    <string name="log_tft_video_connected_ip">🔌 TFT Video/Projeksiyon bağlandı! → %1$s:%2$d</string>
+    <string name="log_video_accept_error">❌ Video accept hatası: %1$s</string>
+    <string name="log_video_bind_error">❌ Video ServerSocket bind hatası (Port %1$d): %2$s</string>
+    <string name="log_tft_video_conn_lost">🔌 TFT Video bağlantısı koptu</string>
+    <string name="log_control_socket_opened">✅ Control ServerSocket açıldı → PORT %1$d</string>
+    <string name="log_tft_control_connected_ip">🔌 TFT Control bağlandı! → %1$s:%2$d</string>
+    <string name="log_control_bind_error">❌ Control ServerSocket bind hatası (Port %1$d): %2$s</string>
+    <string name="log_sending_tuc_query">📤 TFT\'ye TUC GET sorgusu gönderiliyor...</string>
+    <string name="log_control_handshake_done">✅ Control el sıkışması başarıyla tamamlandı!</string>
+    <string name="log_tft_control_conn_lost">🔌 TFT Control bağlantısı koptu</string>
+    <string name="log_binary_handshake_sent">📤 Control port binary el sıkışma paketleri gönderildi</string>
+    <string name="log_hb_socket_opened">✅ Heartbeat ServerSocket açıldı → PORT %1$d</string>
+    <string name="log_tft_dedicated_hb_connected">🔌 TFT Dedicated Heartbeat bağlandı! → %1$s:%2$d</string>
+    <string name="log_dedicated_hb_started">💓 Dedicated Heartbeat gönderimi başladı (15457, 200ms aralık)</string>
+    <string name="log_dedicated_hb_stopped">⚠️ Dedicated Heartbeat gönderim durdu: %1$s</string>
+
+    <!-- BleManager Logs -->
+    <string name="log_ble_conn_starting">🔵 Bluetooth BLE bağlantısı başlatılıyor: %1$s</string>
+    <string name="log_ble_not_supported">❌ Bluetooth desteklenmiyor</string>
+    <string name="log_ble_invalid_mac">❌ Geçersiz MAC adresi: %1$s</string>
+    <string name="log_ble_disconnected">🔴 Bluetooth BLE bağlantısı kesildi</string>
+
+    <!-- Harita & Rota Özelliği -->
+    <string name="btn_open_map">🗺️  Harita &amp; Rota</string>
+    <string name="map_title">🗺️ Harita &amp; Rota Takibi</string>
+    <string name="map_layer_maps">🗺️ OSM Harita</string>
+    <string name="map_layer_topo">🏔️ OpenTopo</string>
+    <string name="map_layer_sat">🛰️ Esri Uydu</string>
+    <string name="map_layer_google_maps">🗺️ Google Harita</string>
+    <string name="map_layer_google_sat">🛰️ Google Uydu (Saf)</string>
+    <string name="map_layer_google_hybrid">🛰️ Google Hibrit</string>
+    <string name="map_layer_offline">📂 Çevrimdışı Harita (.map)</string>
+    <string name="map_layer_3d">3D</string>
+    <string name="map_3d_offline">⬇️ Çevrimdışı</string>
+    <string name="map_3d_loading">🌍 3D harita yükleniyor…</string>
+    <string name="toast_select_offline_map">Lütfen bir OpenAndroMaps (.map) dosyası seçin</string>
+    <string name="toast_offline_map_loaded">✅ Çevrimdışı harita yüklendi: %1$s</string>
+    <string name="error_invalid_map_file">❌ Geçersiz veya okunamayan .map dosyası</string>
+    <string name="map_label_scale_title">🔤 Harita Yazı / Etiket Büyüklüğü</string>
+    <string name="map_layer_osm">🗺️ OSM</string>
+    <string name="map_layer_satellite">🛰️ Uydu</string>
+    <string name="map_btn_import">📂 İçe Aktar</string>
+    <string name="map_btn_routes">📋 Rotalar</string>
+    <string name="map_btn_gps">📍 GPS</string>
+    <string name="map_btn_gps_on">📍 GPS AÇIK</string>
+    <string name="map_btn_back">Geri</string>
+    <string name="map_btn_close">Kapat</string>
+    <string name="map_btn_cancel">İptal</string>
+    <string name="map_btn_apply">Uygula</string>
+    <string name="map_loaded_routes">Yüklü Rotalar</string>
+    <string name="map_route_style_title">Rota Stili</string>
+    <string name="map_route_color">Renk:</string>
+    <string name="map_route_width">Kalınlık:</string>
+    <string name="map_route_preview">Önizleme:</string>
+    <string name="map_route_toggle_visibility">Görünürlüğü Değiştir</string>
+    <string name="map_route_delete">Rotayı Sil</string>
+    <string name="btn_clear_all_imported">🗑️ Tümünü Sil</string>
+    <string name="map_import_success">✅ %1$d rota içe aktarıldı</string>
+    <string name="map_import_no_routes">⚠️ Dosyada rota bulunamadı</string>
+    <string name="map_import_unsupported_format">⚠️ Desteklenmeyen dosya formatı (%1$s). Lütfen .gpx, .kml veya .kmz dosyası seçin.</string>
+    <string name="map_import_error">❌ İçe aktarma hatası: %1$s</string>
+    <string name="map_gps_permission_denied">⚠️ Konum izni reddedildi</string>
+    <string name="map_waiting_gps">📍 GPS sinyali bekleniyor…</string>
+
+    <!-- Map & Cursor Customization -->
+    <string name="map_settings_dialog_title">⚙️ Harita &amp; İmleç Ayarları</string>
+    <string name="map_route_settings_title">⚙️ Rota &amp; Marker Ayarları</string>
+    <string name="map_route_line_color">🎨 Rota Çizgi Rengi:</string>
+    <string name="map_route_line_width_format">Kalınlık: %1$dpx</string>
+    <string name="map_route_show_arrows">⬆️ Yön Oklarını Göster</string>
+    <string name="map_route_arrow_color">Yön Ok Rengi:</string>
+    <string name="map_route_show_distance">📍 Mesafe Markerlarını Göster (km)</string>
+    <string name="map_route_distance_interval">Mesafe Gösterim Aralığı:</string>
+    <string name="map_route_reversed_toast">🔄 %1$s terse çevrildi</string>
+    <string name="map_route_reverse_btn">Terse Çevir</string>
+    <string name="color_red">🔴 Kırmızı</string>
+    <string name="color_orange">🟠 Turuncu</string>
+    <string name="color_yellow">🟡 Sarı</string>
+    <string name="color_green">🟢 Yeşil</string>
+    <string name="color_blue">🔵 Mavi</string>
+    <string name="color_purple">🟣 Mor</string>
+    <string name="color_pink">🩷 Pembe</string>
+    <string name="color_white">⚪ Beyaz</string>
+    <string name="color_cyan">🩵 Turkuaz</string>
+    <string name="color_lime">🍏 Açık Yeşil</string>
+    <string name="label_map_theme">Harita Teması:</string>
+    <string name="map_theme_day">☀️ Gündüz</string>
+    <string name="map_theme_night">🌙 Gece</string>
+    <string name="map_theme_auto">🌗 Otomatik</string>
+    <string name="label_cursor_shape">Konum İmleç Şekli:</string>
+    <string name="label_cursor_color">İmleç Rengi:</string>
+    <string name="label_cursor_preview">İmleç Önizleme:</string>
+    <string name="label_recording_color">İz Kayıt Rengi:</string>
+    <string name="btn_open_tft_padding">🖼️ Padding Settings</string>
+    <string name="cursor_shape_arrow">⬆️ Navigasyon Oku</string>
+    <string name="cursor_shape_motorcycle">🏍️ Motosiklet</string>
+    <string name="cursor_shape_circle">🟢 Daire Nokta</string>
+    <string name="cursor_shape_crosshair">🎯 Hedef / Nişangah</string>
+    <string name="cursor_shape_pin">📍 Konum Pini</string>
+
+    <!-- GPX Track Recording -->
+    <string name="map_btn_record_start">🔴 Kaydet</string>
+    <string name="gpx_export_title">💾 Rotayı GPX Olarak Kaydet</string>
+    <string name="label_gpx_filename">Dosya Adı:</string>
+    <string name="label_gpx_line_color">Rota Çizgi Rengi:</string>
+    <string name="btn_gpx_save">GPX Kaydet</string>
+    <string name="btn_gpx_discard">Sil / İptal Et</string>
+    <string name="toast_gpx_saved">✅ GPX Rotası İndirilenler klasörüne kaydedildi: %1$s</string>
+    <string name="dialog_exit_recording_title">⚠️ Rota Kaydı Devam Ediyor</string>
+    <string name="dialog_exit_recording_msg">Şu anda arka planda rota kaydı yapılıyor. Kaydı durdurup kaydetmek ister misiniz?</string>
+    <string name="btn_stop_and_save">Durdur ve Kaydet</string>
+    <string name="btn_keep_recording">Kayda Devam Et</string>
+
+    <!-- Turn-by-Turn Navigasyon -->
+    <string name="nav_start_navigation">▶ Navigasyonu Başlat</string>
+    <string name="nav_route_options">⚙️ Ayarlar</string>
+    <string name="nav_avoid_tolls">Ücretli Yol Önleme (Ücretsiz)</string>
+    <string name="nav_avoid_highways">Otoyol Önleme (Otoyolsuz)</string>
+    <string name="nav_route_preference">Rota Tercihi:</string>
+    <string name="nav_type_fastest">⚡ En Hızlı Rota</string>
+    <string name="nav_type_shortest">📏 En Kısa Rota</string>
+    <string name="nav_stop">Durdur</string>
+    <string name="nav_destination_selected">📍 Hedef Seçildi</string>
+    <string name="nav_arrived">🎉 Hedefe ulaştınız!</string>
+    <string name="nav_calculating">Rota hesaplanıyor…</string>
+    <string name="nav_recalculating">Rota yeniden hesaplanıyor…</string>
+    <string name="nav_rem_format">Kalan: %1$s (%2$.1f km)</string>
+    <string name="nav_toll_roads_toggle">🛣️ Paralı Yollar</string>
+    <string name="label_initial_total_time">Toplam Süre: %1$s</string>
+    <string name="label_remaining_time">Kalan: %1$s (%2$.1f km)</string>
+    <string name="unit_hours">sa</string>
+    <string name="unit_minutes">dk</string>
+    <string name="duration_format_hours_mins">%1$d %2$s %3$d %4$s</string>
+    <string name="duration_format_mins">%1$d %2$s</string>
+
+    <!-- Uygulama Modu Seçimi -->
+    <string name="label_app_mode">🎮 Uygulama Modu:</string>
+    <string name="mode_mirroring">📺 Ekran Yansıtma</string>
+    <string name="mode_virtual_display">🖥️ Sanal Ekran Yansıtma</string>
+    <string name="mode_control_only">🎮 Sadece Kontrol</string>
+    <string name="label_select_target_app">📱 Sanal Ekranda Başlatılacak Uygulama:</string>
+    <string name="option_internal_map">🗺️ KoveMirror Dahili OSM Harita &amp; Gösterge</string>
+    <string name="btn_select_language">🌐 Dil: %1$s</string>
+    <string name="btn_select_bt_device">📶 Bluetooth: %1$s</string>
+    <string name="bt_device_none">Seçilmedi</string>
+
+    <!-- Sadece Kontrol Modu -->
+    <string name="btn_start_controller">▶  Kumandayı Başlat</string>
+    <string name="btn_stop_controller">⏹  Kumandayı Durdur</string>
+    <string name="status_control_active">🎮 Gidon Kumandası Aktif</string>
+    <string name="notif_control_only_active">🎮 Gidon Kumandası Aktif</string>
+
+    <!-- İzin Butonları -->
+    <string name="btn_overlay_permission">⚠️ Overlay İzni Ver</string>
+    <string name="btn_overlay_granted">✅ Overlay İzni OK</string>
+    <string name="btn_accessibility_permission">⚠️ Erişilebilirlik Aç</string>
+    <string name="btn_accessibility_granted">✅ Erişilebilirlik OK</string>
+    <string name="permission_required_title">İzin Gerekli</string>
+    <string name="overlay_permission_required_msg">Gidon kumanda menüsünü diğer uygulamaların üzerinde gösterebilmek için \"Diğer uygulamaların üzerinde göster\" izni gereklidir.</string>
+    <string name="btn_grant_permission">İzin Ver</string>
+    <string name="toast_enable_accessibility">Lütfen Erişilebilirlik ayarlarında \"KoveMirror Gidon Kumandası\"nı etkinleştirin</string>
+
+    <!-- Accessibility Service -->
+    <string name="accessibility_service_description">KoveMirror Gidon Kontrolörü, motosiklet gidon tuşlarınızın telefonunuzdaki uygulamaları (yakınlaştırma, kaydırma, medya kontrolleri, ses, uygulama değiştirme) kontrol etmesini sağlar.</string>
+
+    <!-- Handlebar Mode Names -->
+    <string name="handlebar_mode_title">🎮 Gidon Menüsü</string>
+    <string name="handlebar_mode_my_location">Konumuma geri dön [ENT]</string>
+    <string name="handlebar_mode_toggle_3d">3D / 2D Harita Geçişi [ENT]</string>
+    <string name="handlebar_mode_zoom">Yakınlaştır / Uzaklaştır</string>
+    <string name="handlebar_mode_pan_vertical">Yukarı / Aşağı Kaydır</string>
+    <string name="handlebar_mode_pan_horizontal">Sola / Sağa Kaydır</string>
+    <string name="handlebar_mode_media_track">Sonraki / Önceki Parça</string>
+    <string name="handlebar_mode_volume">Ses Aç / Kıs</string>
+    <string name="handlebar_mode_play">Oynat [ENT]</string>
+    <string name="handlebar_mode_pause">Duraklat [ENT]</string>
+    <string name="handlebar_mode_app_switch">Sonraki / Önceki Uygulama</string>
+    <string name="handlebar_mode_relaunch_stream">Yayını Yeniden Başlat [ENT]</string>
+
+    <!-- Handlebar Toasts -->
+    <string name="toast_handlebar_mode_assigned">✅ Gidon Tuşları: %1$s</string>
+    <string name="toast_my_location">📍 Konumuma Dön</string>
+    <string name="toast_relaunching_stream">🚀 Video Yayını Yeniden Başlatılıyor...</string>
+
+    <!-- TFT Frame Fit Dialog -->
+    <string name="btn_tft_fit">Çerçeve / Bar Ayarları</string>
+    <string name="btn_tft_padding_settings">📺 TFT Siyah Bar Ayarları</string>
+    <string name="tft_fit_dialog_title">📺 TFT Ekran Çerçeve Ayarı</string>
+    <string name="tft_fit_dialog_description">Haritanın TFT ekranda tam gözükmesi için üst ve alt siyah bar yüksekliklerini ayarlayın:</string>
+    <string name="tft_fit_top_label">Üst Siyah Bar: %1$d dp</string>
+    <string name="tft_fit_bottom_label">Alt Siyah Bar: %1$d dp</string>
+    <string name="tft_fit_reset">Sıfırla</string>
+    <string name="map_btn_favorites">⭐ Favoriler</string>
+    <string name="btn_add_favorite">⭐ Favori</string>
+    <string name="dialog_favorites_title">⭐ Favoriler &amp; Adres Arama</string>
+    <string name="search_address_hint">Adres veya mekan adı girin...</string>
+    <string name="btn_search">Ara</string>
+    <string name="label_saved_favorites">Kayıtlı Favoriler</string>
+    <string name="label_search_results">Arama Sonuçları</string>
+    <string name="toast_favorite_saved">✅ Favori kaydedildi: %1$s</string>
+    <string name="toast_favorite_deleted">🗑️ Favori silindi</string>
+    <string name="dialog_save_fav_title">Favori Konum Kaydet</string>
+    <string name="dialog_save_fav_prompt">Bu konum için bir isim girin:</string>
+    <string name="no_favorites_yet">Henüz kayıtlı favori konum yok</string>
+    <string name="no_results_found">Aramanıza uygun sonuç bulunamadı</string>
+    <string name="tft_fit_save">Kaydet &amp; Kapat</string>
+    <string name="toast_tft_fit_saved">✅ TFT Çerçeve Ayarı Kaydedildi</string>
+
+    <!-- Hakkında & Debug Toggle -->
+    <string name="btn_about">ℹ️ Hakkında</string>
+    <string name="about_dialog_title">KoveMirror Hakkında</string>
+    <string name="about_developer_credit">H. Nakturk tarafından dizayn edilip geliştirildi</string>
+    <string name="btn_toggle_debug_show">📋 Debug Terminali Göster</string>
+    <string name="btn_toggle_debug_hide">📋 Debug Terminali Gizle</string>
+
+    <!-- Ekran Karartma (Enerji Tasarrufu) -->
+    <string name="btn_screen_dim_off">🔆 Ekran: Normal</string>
+    <string name="btn_screen_dim_on">🌑 Ekran: Karartılmış</string>
+    <string name="toast_screen_dimmed">🌑 Ekran enerji tasarrufu için karartıldı. Yansıtma devam ediyor.</string>
+    <string name="toast_screen_bright">🔆 Ekran parlaklığı geri yüklendi.</string>
+
+    <!-- Rota Hava Durumu -->
+    <string name="toast_route_weather_on">🌤️ Rota Hava Durumu Açıldı</string>
+    <string name="toast_route_weather_off">🌤️ Rota Hava Durumu Kapatıldı</string>
+    <string name="weather_temperature">🌡️ Sıcaklık: %1$.1f°C</string>
+    <string name="weather_precipitation_prob">💧 Yağış İhtimali: %%%1$d (%2$.1f mm)</string>
+    <string name="weather_wind">💨 Rüzgar: %1$.1f km/s</string>
+    <string name="weather_distance_from_start">📍 Başlangıçtan: %1$.1f km</string>
+
+    <!-- Sert Viraj Uyarıları -->
+    <string name="label_curve_warnings_section">🏍️ Tehlikeli &amp; Sert Viraj Uyarıları</string>
+    <string name="label_curve_warnings_title">Sert Viraj &amp; U-Dönüş İkazları</string>
+    <string name="label_curve_warnings_desc">Harita üzerinde renk kodlu viraj rozetleri</string>
+    <string name="curve_hairpin">U-Viraj</string>
+    <string name="curve_sharp_left">Sert Sol Viraj</string>
+    <string name="curve_sharp_right">Sert Sağ Viraj</string>
+    <string name="curve_medium_left">Orta Sol Viraj</string>
+    <string name="curve_medium_right">Orta Sağ Viraj</string>
+    <string name="curve_turn_angle">📐 Dönüş Açısı: %1$d°</string>
+
+    <!-- Modern Ayarlar UI -->
+    <string name="label_live_preview">CANLI HARİTA &amp; İMLEÇ ÖNİZLEMESİ</string>
+    <string name="label_driving_features">🛡️ Sürüş &amp; Güvenlik Özellikleri</string>
+    <string name="label_route_weather_title">Canlı Rota Hava Durumu</string>
+    <string name="label_route_weather_desc">Güzergah boyunca sıcaklık ve yağış rozetleri</string>
+    <string name="label_tft_settings_title">📺 TFT Kadran Çerçeve Ayarları</string>
+    <string name="label_tft_settings_desc">Üst ve alt siyah bar marjlarını düzenleyin</string>
+    <string name="btn_save_settings">💾 Kaydet &amp; Uygula</string>
+</resources>
