@@ -447,11 +447,23 @@ class KovePresentation(
         }
     }
 
+    private val externalNavStaleCheck = Runnable {
+        if (!(MapStateHolder.isNavigating && MapStateHolder.activeNavigationRoute != null)) {
+            applyExternalNav(ExternalNavState.current)
+        }
+    }
+
     private fun onExternalNavChanged(maneuver: ExternalNavState.Maneuver?) {
         mainHandler.post {
             // Internal turn-by-turn has priority; it owns the banner while active.
             if (MapStateHolder.isNavigating && MapStateHolder.activeNavigationRoute != null) return@post
             applyExternalNav(maneuver)
+            // Re-evaluate once the data would be stale, so a dead listener cannot leave an old
+            // instruction on the TFT forever.
+            mainHandler.removeCallbacks(externalNavStaleCheck)
+            if (maneuver != null) {
+                mainHandler.postDelayed(externalNavStaleCheck, ExternalNavState.STALE_AFTER_MS + 1000L)
+            }
         }
     }
 
@@ -717,6 +729,7 @@ class KovePresentation(
     override fun onStop() {
         MapStateHolder.removeListener(this)
         ExternalNavState.removeListener(externalNavListener)
+        mainHandler.removeCallbacks(externalNavStaleCheck)
         try {
             locationManager?.removeUpdates(this)
         } catch (_: Exception) {}

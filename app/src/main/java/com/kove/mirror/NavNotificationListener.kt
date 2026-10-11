@@ -78,10 +78,17 @@ class NavNotificationListener : NotificationListenerService() {
     override fun onNotificationRemoved(sbn: StatusBarNotification?) {
         sbn ?: return
         if (sbn.packageName !in WATCHED_PACKAGES) return
-        if (ExternalNavState.current?.sourcePackage == sbn.packageName) {
-            DebugLogger.info("🔔 ${sbn.packageName} navigation notification removed → banner off")
-            ExternalNavState.clear(sbn.packageName)
+        if (ExternalNavState.current?.notificationKey == sbn.key) {
+            DebugLogger.info("🔔 ${sbn.packageName} guidance notification removed → banner off")
+            ExternalNavState.clear(sbn.key)
         }
+    }
+
+    override fun onListenerDisconnected() {
+        super.onListenerDisconnected()
+        // We can no longer see updates or removals, so never show a possibly stale turn.
+        DebugLogger.warning("🔔 Navigation notification listener disconnected")
+        ExternalNavState.clear()
     }
 
     private fun handle(sbn: StatusBarNotification) {
@@ -101,6 +108,17 @@ class NavNotificationListener : NotificationListenerService() {
         val bigText = extras.getCharSequence(Notification.EXTRA_BIG_TEXT)?.toString()?.trim().orEmpty()
 
         if (title.isEmpty() && text.isEmpty()) return
+
+        // Both apps post other ongoing notifications (location sharing, "Waze is active",
+        // driving mode). Only real guidance carries CATEGORY_NAVIGATION or a distance.
+        val isNavigationCategory = n.category == Notification.CATEGORY_NAVIGATION
+        val hasDistance = DISTANCE_REGEX.containsMatchIn(title) || DISTANCE_REGEX.containsMatchIn(text)
+        if (!isNavigationCategory && !hasDistance) return
+        // A different notification from the same app must not replace live guidance.
+        val cur = ExternalNavState.current
+        if (cur != null && cur.notificationKey.isNotEmpty() && cur.notificationKey != sbn.key &&
+            !isNavigationCategory && ExternalNavState.isActive
+        ) return
 
         // Google Maps layouts seen in the wild (they change between versions):
         //   A) title = "200 m"              text = "Turn left onto Tržaška cesta"  sub = "12 min · 5,3 km · 09:41"
@@ -133,8 +151,11 @@ class NavNotificationListener : NotificationListenerService() {
                 road = ""
             }
             else -> {
-                // Split "Turn left onto X" / "Zavijte levo na X" at the first " onto " / " na " style word
-                val split = Regex("""\s+(onto|on|na|v|auf|sur|su|a)\s+""", RegexOption.IGNORE_CASE).find(textRest)
+                // Split "Turn left onto X" / "Zavijte levo na X" at an "onto"-style word, but only
+                // when a street name (capitalised or numbered) follows - "Gire a la derecha" must
+                // stay one instruction.
+                // No IGNORE_CASE: Java would then also case-fold \p{Lu} and defeat the lookahead.
+                val split = Regex("""\s+(?:[oO]nto|[nN]a|[aA]uf|[vV]ers|[vV]erso)\s+(?=[\p{Lu}0-9])""").find(textRest)
                 if (split != null) {
                     instruction = textRest.substring(0, split.range.first).trim()
                     road = textRest.substring(split.range.last + 1).trim()
@@ -160,7 +181,8 @@ class NavNotificationListener : NotificationListenerService() {
             distanceText = distanceText,
             distanceMeters = distanceMeters,
             etaText = eta,
-            icon = icon
+            icon = icon,
+            notificationKey = sbn.key ?: ""
         )
 
         val prev = ExternalNavState.current

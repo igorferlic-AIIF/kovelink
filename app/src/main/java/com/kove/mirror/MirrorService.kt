@@ -500,6 +500,7 @@ class MirrorService : Service() {
         if (ipAddress.isEmpty() || ipAddress == "0.0.0.0") {
             // Never listen on all interfaces: wait for the bike Wi-Fi (onAvailable retries).
             DebugLogger.warning("⚠️ No Wi-Fi IP yet - TCP server not started (waiting for the bike's Wi-Fi)")
+            tcpServerStarted = false
             return
         }
         val peerIp = NetworkUtils.getGatewayAddress(applicationContext)

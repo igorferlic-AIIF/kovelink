@@ -28,6 +28,8 @@ object ExternalNavState {
         val etaText: String,
         /** Manoeuvre arrow rendered by the navigation app, may be null. */
         val icon: Bitmap?,
+        /** StatusBarNotification.key of the guidance notification this came from. */
+        val notificationKey: String = "",
         val timestampMs: Long = System.currentTimeMillis()
     )
 
@@ -39,7 +41,7 @@ object ExternalNavState {
      * Consider the data stale if the nav app has not updated it for this long. The primary
      * "navigation ended" signal is the notification being removed; this is only a safety net.
      */
-    private const val STALE_AFTER_MS = 10 * 60_000L
+    const val STALE_AFTER_MS = 10 * 60_000L
 
     @Volatile var current: Maneuver? = null
         private set
@@ -58,9 +60,14 @@ object ExternalNavState {
         notifyListeners(maneuver)
     }
 
-    fun clear(sourcePackage: String? = null) {
+    /**
+     * Forget the current manoeuvre. With [notificationKey] only the manoeuvre that came from
+     * that exact notification is cleared (so dismissing e.g. a location-sharing notification
+     * from the same app does not drop live guidance).
+     */
+    fun clear(notificationKey: String? = null) {
         val cur = current ?: return
-        if (sourcePackage != null && cur.sourcePackage != sourcePackage) return
+        if (notificationKey != null && cur.notificationKey != notificationKey) return
         current = null
         notifyListeners(null)
     }

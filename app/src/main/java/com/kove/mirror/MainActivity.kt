@@ -122,6 +122,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         refreshWifiStatus()
         updatePermissionButtonStates()
+        requestBackgroundLocationIfNeeded()
     }
 
     override fun onPause() {

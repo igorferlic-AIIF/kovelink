@@ -400,13 +400,13 @@
     <string name="label_locked_nav_hint">Start navigation in Google Maps, then lock the phone and put it in your pocket. KoveLink reads the Google Maps guidance notification and shows the next turn, distance and ETA on the TFT map. Both permissions below are needed.</string>
     <string name="btn_notification_access">⚠️ Grant notification access</string>
     <string name="btn_notification_access_granted">✅ Notification access OK</string>
-    <string name="toast_enable_notification_access">Enable "KoveLink navigation" in the list</string>
+    <string name="toast_enable_notification_access">Enable \"KoveLink navigation\" in the list</string>
     <string name="toast_notification_access_granted">✅ Notification access is already granted</string>
     <string name="btn_battery_optimization">⚠️ Allow unrestricted battery</string>
     <string name="btn_battery_optimization_granted">✅ Battery unrestricted</string>
     <string name="toast_battery_already_unrestricted">✅ Battery optimisation is already off for KoveLink</string>
     <string name="dialog_bg_location_title">Location while locked</string>
-    <string name="dialog_bg_location_message">So the TFT map keeps moving while the phone is locked, Android needs the location permission set to "Allow all the time". Choose that option on the next screen.</string>
+    <string name="dialog_bg_location_message">So the TFT map keeps moving while the phone is locked, Android needs the location permission set to \"Allow all the time\". Choose that option on the next screen.</string>
     <string name="btn_video_fps">🎞️ Video frame rate</string>
     <string name="btn_video_fps_value">🎞️ Video: %1$d fps (%2$s)</string>
     <string name="fps_mode_smooth">smooth, warmest</string>
