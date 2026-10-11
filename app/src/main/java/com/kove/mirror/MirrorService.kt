@@ -38,6 +38,16 @@ class MirrorService : Service() {
 
         @Volatile var runningInstance: MirrorService? = null
 
+        /** Encoder frame rate presets: smooth / balanced / saver. Stored in kove_prefs "video_fps". */
+        const val PREF_VIDEO_FPS = "video_fps"
+        val FPS_PRESETS = intArrayOf(30, 24, 15)
+        const val DEFAULT_FPS = 24
+
+        fun getVideoFps(context: Context): Int {
+            val v = context.getSharedPreferences("kove_prefs", Context.MODE_PRIVATE).getInt(PREF_VIDEO_FPS, DEFAULT_FPS)
+            return if (v in FPS_PRESETS) v else DEFAULT_FPS
+        }
+
         fun updatePadding(padding: Int) {
             updatePadding(padding, padding)
         }
@@ -152,7 +162,7 @@ class MirrorService : Service() {
                         startForeground(
                             NOTIF_ID,
                             buildNotif(getString(R.string.notif_waiting_tft)),
-                            ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION
+                            ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION or locationServiceTypeFlag()
                         )
                     } else {
                         startForeground(NOTIF_ID, buildNotif(getString(R.string.notif_waiting_tft)))
@@ -169,7 +179,7 @@ class MirrorService : Service() {
                     startForeground(
                         NOTIF_ID,
                         buildNotif(getString(R.string.notif_control_only_active)),
-                        ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE
+                        ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE or locationServiceTypeFlag()
                     )
                 } else {
                     startForeground(NOTIF_ID, buildNotif(getString(R.string.notif_control_only_active)))
@@ -190,6 +200,38 @@ class MirrorService : Service() {
         stopMirroring()
         runningInstance = null
         super.onDestroy()
+    }
+
+    // ─── Helpers ─────────────────────────────────────────────────
+
+    /**
+     * FOREGROUND_SERVICE_TYPE_LOCATION keeps GPS updates flowing to the TFT map while the
+     * phone is locked (Android 14 throttles background location otherwise). Android refuses
+     * the type unless the runtime location permission is granted, so only add it then.
+     */
+    private fun locationServiceTypeFlag(): Int {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) return 0
+        val granted = androidx.core.content.ContextCompat.checkSelfPermission(
+            this, android.Manifest.permission.ACCESS_FINE_LOCATION
+        ) == android.content.pm.PackageManager.PERMISSION_GRANTED
+        return if (granted) ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION else 0
+    }
+
+    private fun acquireWakeLock() {
+        // Never stack wakelocks: a second START while running used to leak the first one.
+        releaseWakeLock()
+        val powerManager = getSystemService(Context.POWER_SERVICE) as android.os.PowerManager
+        wakeLock = powerManager.newWakeLock(
+            android.os.PowerManager.PARTIAL_WAKE_LOCK,
+            "KoveLink::PartialWakeLock"
+        ).also { it.acquire(WAKELOCK_TIMEOUT_MS) }
+    }
+
+    private fun releaseWakeLock() {
+        try {
+            if (wakeLock?.isHeld == true) wakeLock?.release()
+        } catch (_: Exception) {}
+        wakeLock = null
     }
 
     // ─── Mirroring logic ─────────────────────────────────────────
@@ -246,12 +288,7 @@ class MirrorService : Service() {
             DebugLogger.info("   Control Port: ${TcpServer.PORT_CONTROL}")
             DebugLogger.info("   Heartbeat Port: ${TcpServer.PORT_HEARTBEAT}")
 
-            val powerManager = getSystemService(Context.POWER_SERVICE) as android.os.PowerManager
-            wakeLock = powerManager.newWakeLock(
-                android.os.PowerManager.PARTIAL_WAKE_LOCK,
-                "KoveMirror::PartialWakeLock"
-            )
-            wakeLock?.acquire(WAKELOCK_TIMEOUT_MS)
+            acquireWakeLock()
 
             val projection = getOrCreateMediaProjection() ?: throw NullPointerException("MediaProjection is null")
             mediaProjection = projection
@@ -312,12 +349,7 @@ class MirrorService : Service() {
             DebugLogger.info("   Heartbeat Port: ${TcpServer.PORT_HEARTBEAT}")
             DebugLogger.info("   Video: DISABLED")
 
-            val powerManager = getSystemService(Context.POWER_SERVICE) as android.os.PowerManager
-            wakeLock = powerManager.newWakeLock(
-                android.os.PowerManager.PARTIAL_WAKE_LOCK,
-                "KoveMirror::PartialWakeLock"
-            )
-            wakeLock?.acquire(WAKELOCK_TIMEOUT_MS)
+            acquireWakeLock()
 
             val savedMac = getOrAutoSelectBtMac()
             if (savedMac.isNotEmpty()) {
@@ -392,6 +424,7 @@ class MirrorService : Service() {
                 mediaProjection = projection,
                 width  = TFT_WIDTH,
                 height = TFT_HEIGHT,
+                fps = getVideoFps(applicationContext),
                 padding = TFT_PADDING,
                 topPaddingPx = topPx,
                 bottomPaddingPx = bottomPx,
@@ -424,7 +457,7 @@ class MirrorService : Service() {
                 width  = TFT_WIDTH,
                 height = TFT_HEIGHT,
                 dpi = 320,
-                fps = 30,
+                fps = getVideoFps(applicationContext),
                 targetPackage = targetPkg
             )
             presentationEncoder = encoder
@@ -435,7 +468,7 @@ class MirrorService : Service() {
                 val label = if (!targetPkg.isNullOrEmpty() && targetPkg != "internal_map") {
                     "🏍️ TFT ($targetPkg)"
                 } else {
-                    "🏍️ TFT Harita & Navigasyon"
+                    getString(R.string.notif_tft_map_navigation)
                 }
                 updateNotif(label)
                 DebugLogger.success("✅ VirtualDisplay Presentation encoder active (target=$targetPkg)")
@@ -464,13 +497,21 @@ class MirrorService : Service() {
         }
 
         val ipAddress = NetworkUtils.getWifiIpAddress(applicationContext)
-        DebugLogger.info("🔌 TCP Server starting, bind IP: $ipAddress (controlOnly=$isControlOnlyMode)")
+        if (ipAddress.isEmpty() || ipAddress == "0.0.0.0") {
+            // Never listen on all interfaces: wait for the bike Wi-Fi (onAvailable retries).
+            DebugLogger.warning("⚠️ No Wi-Fi IP yet - TCP server not started (waiting for the bike's Wi-Fi)")
+            return
+        }
+        val peerIp = NetworkUtils.getGatewayAddress(applicationContext)
+            .takeIf { it.isNotEmpty() && it != "0.0.0.0" } ?: TcpServer.DEFAULT_TFT_IP
+        DebugLogger.info("🔌 TCP Server starting, bind IP: $ipAddress, allowed peer: $peerIp (controlOnly=$isControlOnlyMode)")
 
         val server = TcpServer(
             hostIp = ipAddress,
             width  = TFT_WIDTH,
             height = TFT_HEIGHT,
             videoEnabled = !isControlOnlyMode,
+            allowedPeerIp = peerIp,
             onConnected = { os ->
                 if (!isControlOnlyMode) {
                     DebugLogger.success(getString(R.string.log_tft_video_connected))
@@ -478,7 +519,8 @@ class MirrorService : Service() {
 
                     val isInteractive = screenStateManager?.isScreenInteractive() ?: true
                     val isMapActive = MapStateHolder.isMapOpen || MapStateHolder.isNavigating ||
-                            MapStateHolder.activeNavigationRoute != null || MapStateHolder.loadedRoutes.isNotEmpty()
+                            MapStateHolder.activeNavigationRoute != null || MapStateHolder.loadedRoutes.isNotEmpty() ||
+                            ExternalNavState.isActive
 
                     synchronized(modeLock) {
                         if (!isInteractive && isMapActive) {
@@ -551,10 +593,7 @@ class MirrorService : Service() {
         mediaProjection?.stop()
         mediaProjection = null
 
-        if (wakeLock?.isHeld == true) {
-            wakeLock?.release()
-        }
-        wakeLock = null
+        releaseWakeLock()
 
         DebugLogger.info(getString(R.string.log_all_stopped))
     }

@@ -1,7 +1,7 @@
 <resources>
     <!-- App Details -->
-    <string name="app_name">KoveMirror</string>
-    <string name="header_subtitle">Kove TFT Full Screen Mirroring</string>
+    <string name="app_name">KoveLink</string>
+    <string name="header_subtitle">Kove TFT mirroring &amp; locked-phone navigation</string>
 
     <!-- Language Selection -->
     <string name="label_language">🌐 Application Language:</string>
@@ -65,7 +65,7 @@
 
     <!-- Security Warning -->
     <string name="security_warning_title">Security Warning</string>
-    <string name="security_warning_msg">Root or Debugger detected on your device. This may affect the app\'s security and subscription infrastructure. You may continue using the app, but your subscriptions will be verified more frequently.</string>
+    <string name="security_warning_msg">Root or a debugger was detected on this device. The app will still work, but screen capture and Bluetooth may be less stable.</string>
 
     <!-- File Sharing & Toast -->
     <string name="log_file_not_found">Log file not found</string>
@@ -74,7 +74,7 @@
 
     <!-- Log Messages (UI & Activity) -->
     <string name="log_crash_detected">🔥 CRASH DETECTED ON DEVICE:</string>
-    <string name="log_app_started">🏍️ KoveMirror v2.0 started</string>
+    <string name="log_app_started">🏍️ KoveLink started</string>
     <string name="log_step_1">1. Connect to motorcycle WiFi</string>
     <string name="log_step_2">2. Phone IP will appear above</string>
     <string name="log_step_3">3. Press the \'Start\' button</string>
@@ -99,7 +99,7 @@
     <string name="notif_tft_connected">🔴 TFT connected — Stream active</string>
     <string name="notif_waiting_tft_port">🟡 Waiting for TFT (port %1$d)</string>
     <string name="notif_action_stop">Stop</string>
-    <string name="notif_channel_name">KoveMirror Mirroring</string>
+    <string name="notif_channel_name">KoveLink Mirroring</string>
     <string name="notif_channel_description">Kove TFT screen mirroring service</string>
 
     <!-- MirrorService Logs -->
@@ -294,7 +294,7 @@
     <string name="mode_virtual_display">🖥️ Virtual Display Mirroring</string>
     <string name="mode_control_only">🎮 Control Only</string>
     <string name="label_select_target_app">📱 Select App to Launch on Virtual Display:</string>
-    <string name="option_internal_map">🗺️ KoveMirror Internal OSM Map &amp; Dashboard</string>
+    <string name="option_internal_map">🗺️ KoveLink Internal OSM Map &amp; Dashboard</string>
     <string name="btn_select_language">🌐 Language: %1$s</string>
     <string name="btn_select_bt_device">📶 Bluetooth: %1$s</string>
     <string name="bt_device_none">Not Selected</string>
@@ -313,10 +313,10 @@
     <string name="permission_required_title">Permission Required</string>
     <string name="overlay_permission_required_msg">Overlay permission is required to display the handlebar mode menu on top of other apps. Please grant "Draw over other apps" permission.</string>
     <string name="btn_grant_permission">Grant Permission</string>
-    <string name="toast_enable_accessibility">Please enable "KoveMirror Handlebar Controller" in the Accessibility settings</string>
+    <string name="toast_enable_accessibility">Please enable "KoveLink Handlebar Controller" in the Accessibility settings</string>
 
     <!-- Accessibility Service -->
-    <string name="accessibility_service_description">KoveMirror Handlebar Controller allows your motorcycle handlebar buttons to control apps on your phone (zoom, pan, media controls, volume, app switching).</string>
+    <string name="accessibility_service_description">KoveLink Handlebar Controller allows your motorcycle handlebar buttons to control apps on your phone (zoom, pan, media controls, volume, app switching).</string>
 
     <!-- Handlebar Mode Names -->
     <string name="handlebar_mode_title">🎮 Handlebar Mode</string>
@@ -351,8 +351,8 @@
 
     <!-- About & Debug Toggle -->
     <string name="btn_about">ℹ️ About</string>
-    <string name="about_dialog_title">KoveMirror About</string>
-    <string name="about_developer_credit">Designed and developed by H. Nakturk</string>
+    <string name="about_dialog_title">About KoveLink</string>
+    <string name="about_developer_credit">KoveLink is a fork of KoveMirror by H. Nakturk (github.com/nakturk/kovemirror), extended with locked-phone Google Maps guidance, bike-only network access and Slovenian translation. Unofficial, not affiliated with Kove.</string>
     <string name="btn_toggle_debug_show">📋 Show Debug Terminal</string>
     <string name="btn_toggle_debug_hide">📋 Hide Debug Terminal</string>
 
@@ -389,4 +389,28 @@
     <string name="label_tft_settings_title">📺 TFT Display Padding</string>
     <string name="label_tft_settings_desc">Adjust top &amp; bottom black bar margins for motorcycle TFT</string>
     <string name="btn_save_settings">💾 Save &amp; Apply</string>
+
+    <!-- KoveLink additions -->
+    <string name="nav_listener_label">KoveLink navigation (Google Maps / Waze)</string>
+    <string name="nav_following_route">Following route</string>
+    <string name="notif_tft_map_navigation">🏍️ TFT map &amp; navigation</string>
+    <string name="wifi_ssid_not_connected">Not connected</string>
+    <string name="wifi_ssid_unknown">Unknown</string>
+    <string name="label_locked_nav_title">🔒 Navigation with the phone locked</string>
+    <string name="label_locked_nav_hint">Start navigation in Google Maps, then lock the phone and put it in your pocket. KoveLink reads the Google Maps guidance notification and shows the next turn, distance and ETA on the TFT map. Both permissions below are needed.</string>
+    <string name="btn_notification_access">⚠️ Grant notification access</string>
+    <string name="btn_notification_access_granted">✅ Notification access OK</string>
+    <string name="toast_enable_notification_access">Enable "KoveLink navigation" in the list</string>
+    <string name="toast_notification_access_granted">✅ Notification access is already granted</string>
+    <string name="btn_battery_optimization">⚠️ Allow unrestricted battery</string>
+    <string name="btn_battery_optimization_granted">✅ Battery unrestricted</string>
+    <string name="toast_battery_already_unrestricted">✅ Battery optimisation is already off for KoveLink</string>
+    <string name="dialog_bg_location_title">Location while locked</string>
+    <string name="dialog_bg_location_message">So the TFT map keeps moving while the phone is locked, Android needs the location permission set to "Allow all the time". Choose that option on the next screen.</string>
+    <string name="btn_video_fps">🎞️ Video frame rate</string>
+    <string name="btn_video_fps_value">🎞️ Video: %1$d fps (%2$s)</string>
+    <string name="fps_mode_smooth">smooth, warmest</string>
+    <string name="fps_mode_balanced">balanced</string>
+    <string name="fps_mode_saver">battery saver</string>
+    <string name="toast_fps_applies_next_start">Applies the next time mirroring is started</string>
 </resources>

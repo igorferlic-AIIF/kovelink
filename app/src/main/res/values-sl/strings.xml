@@ -1,0 +1,416 @@
+<resources>
+    <!-- App Details -->
+    <string name="app_name">KoveLink</string>
+    <string name="header_subtitle">Zrcaljenje na TFT Kove in navigacija z zaklenjenim telefonom</string>
+
+    <!-- Language Selection -->
+    <string name="label_language">🌐 Jezik aplikacije:</string>
+
+    <!-- UI Labels -->
+    <string name="label_select_bt_device">Izberi Bluetooth napravo TFT</string>
+    <string name="label_ip_address_listening">📱 IP telefona (posluša na vratih 17818):</string>
+    <string name="label_tft_target_address">↑ Naslov za povezavo TFT</string>
+    <string name="label_bt_device_trigger">🔵 Bluetooth naprava TFT (za vklop Wi-Fi):</string>
+    <string name="label_bt_device_subtext">Med seznanjenimi napravami izberi zaslon TFT svojega motorja</string>
+    <string name="label_resolution_padding_settings">🖥️ Ločljivost TFT in robovi:</string>
+    <string name="label_resolution">Ločljivost: </string>
+    <string name="label_padding">Rob (zgoraj/spodaj): </string>
+    <string name="label_debug_log">📋 Dnevnik</string>
+    <string name="label_debug_terminal">Terminal za odpravljanje napak</string>
+    <string name="label_log_legend">🟢Uspeh  🔴Napaka  🟠Opozorilo  🔵Podatki  🟣💓Utrip  ⚪Info</string>
+
+    <!-- Display Modes -->
+    <string name="label_display_mode">📺 Način prikaza:</string>
+    <string name="label_tft_resolution">🖥️ Model / ločljivost TFT:</string>
+    <string name="mode_center_crop">🟢 Sredinski izrez (cel zaslon)</string>
+    <string name="mode_fit">🔵 Prilagodi (robovi)</string>
+    <string name="mode_stretch">🟠 Raztegni</string>
+
+    <!-- Presets -->
+    <string name="preset_600x1024">600×1024 (Kove 800X)</string>
+    <string name="preset_480x800">480×800 (pokončno, majhno)</string>
+    <string name="preset_640x1284">640×1284 (pokončno, veliko)</string>
+    <string name="preset_1280x720">1280×720 (ležeče)</string>
+    <string name="preset_800x800">800×800 (kvadrat)</string>
+
+    <!-- WiFi States -->
+    <string name="wifi_waiting">Čakam na Wi-Fi …</string>
+    <string name="wifi_gateway">Prehod: --</string>
+    <string name="wifi_not_connected_status">⚠️ Wi-Fi ni povezan</string>
+    <string name="wifi_connected_status">✅ Wi-Fi: %1$s</string>
+    <string name="wifi_gateway_tbox">🏍️ Prehod (TBox): %1$s</string>
+    <string name="wifi_required_toast">⚠️ Najprej se poveži na Wi-Fi motorja</string>
+
+    <!-- BT States / Spinner Options -->
+    <string name="bt_not_supported">Bluetooth ni podprt</string>
+    <string name="bt_off">Bluetooth je izklopljen</string>
+    <string name="bt_permission_missing">Manjka dovoljenje</string>
+    <string name="bt_no_paired_devices">Ni seznanjenih naprav</string>
+    <string name="status_connecting">Povezujem …</string>
+
+    <!-- Status Messages -->
+    <string name="status_ready">⏸ Pripravljen</string>
+    <string name="status_stream_active">🔴 Prenos aktiven</string>
+    <string name="status_stopped">⏹ Ustavljeno</string>
+
+    <!-- Resolution Info -->
+    <string name="res_info_default">Pokončno 600×1024 (shape=6) — standardni pokončni TFT Kove</string>
+    <string name="res_info_format">Cilj: %1$d×%2$d | Rob: %3$dpx</string>
+
+    <!-- Button Actions -->
+    <string name="btn_start_mirroring">▶  Začni zrcaljenje</string>
+    <string name="btn_stop_mirroring">⏹  Ustavi</string>
+    <string name="btn_share_logs">Deli dnevnik</string>
+    <string name="btn_ok">Razumem</string>
+
+    <!-- Security Warning -->
+    <string name="security_warning_title">Varnostno opozorilo</string>
+    <string name="security_warning_msg">Na napravi je zaznan root ali razhroščevalnik. Aplikacija bo delovala, vendar sta zajem zaslona in Bluetooth lahko manj stabilna.</string>
+
+    <!-- File Sharing & Toast -->
+    <string name="log_file_not_found">Datoteka dnevnika ni najdena</string>
+    <string name="share_logs_title">Deli dnevnik</string>
+    <string name="log_share_error">Napaka pri deljenju dnevnika: %1$s</string>
+
+    <!-- Log Messages (UI & Activity) -->
+    <string name="log_crash_detected">🔥 ZAZNANO SESUTJE NA NAPRAVI:</string>
+    <string name="log_app_started">🏍️ KoveLink zagnan</string>
+    <string name="log_step_1">1. Poveži se na Wi-Fi motorja</string>
+    <string name="log_step_2">2. Zgoraj se bo prikazal IP telefona</string>
+    <string name="log_step_3">3. Pritisni gumb »Začni«</string>
+    <string name="log_step_4">4. Dnevnik se napolni, ko se TFT poveže</string>
+    <string name="log_wifi_not_connected">⚠️ Wi-Fi ni povezan — poveži se na dostopno točko motorja</string>
+    <string name="log_phone_ip">📡 IP telefona: %1$s</string>
+    <string name="log_gateway">🏍️ Prehod   : %1$s</string>
+    <string name="log_target_resolution">🖥️ Ciljna ločljivost TFT: %1$d×%2$d | Rob: %3$dpx</string>
+    <string name="log_request_screen_capture">🔐 Zahtevam dovoljenje za zajem zaslona …</string>
+    <string name="log_permission_granted">✅ Dovoljenje odobreno — zaganjam MirrorService</string>
+    <string name="log_service_start_failed">❌ Zagon storitve ni uspel: %1$s</string>
+    <string name="log_screen_capture_denied">❌ Dovoljenje za zajem zaslona zavrnjeno</string>
+    <string name="log_stopped_by_user">⏹️ Ustavil uporabnik</string>
+    <string name="log_bt_permissions_missing">⚠️ Manjkajo dovoljenja za Bluetooth, naprav ni mogoče našteti</string>
+    <string name="log_selected_bt">🔗 Izbran Bluetooth: %1$s (%2$s)</string>
+    <string name="log_bt_permissions_granted">✅ Dovoljenja za Bluetooth odobrena</string>
+    <string name="log_bt_permissions_denied">⚠️ Nekatera dovoljenja za Bluetooth so zavrnjena</string>
+    <string name="log_padding_updated_on_the_fly">🔄 Rob sproti posodobljen: %1$dpx</string>
+
+    <!-- Notification & Service -->
+    <string name="notif_waiting_tft">⏳ Čakam na povezavo TFT …</string>
+    <string name="notif_tft_connected">🔴 TFT povezan — prenos aktiven</string>
+    <string name="notif_waiting_tft_port">🟡 Čakam na TFT (vrata %1$d)</string>
+    <string name="notif_action_stop">Ustavi</string>
+    <string name="notif_channel_name">Zrcaljenje KoveLink</string>
+    <string name="notif_channel_description">Storitev za zrcaljenje zaslona na TFT Kove</string>
+
+    <!-- MirrorService Logs -->
+    <string name="log_mirroring_starting">▶️ Zaganjam zrcaljenje …</string>
+    <string name="log_bt_mac_not_selected">⚠️ Naslov MAC Bluetooth ni izbran, sprožilec BLE je onemogočen</string>
+    <string name="log_searching_wifi">📡 Iščem omrežje Wi-Fi in vežem proces …</string>
+    <string name="log_wifi_bound_process">🔗 Proces aplikacije uspešno vezan na omrežje Wi-Fi (bindProcessToNetwork)</string>
+    <string name="log_wifi_bound_process_legacy">🔗 Proces aplikacije uspešno vezan na omrežje Wi-Fi (setProcessDefaultNetwork)</string>
+    <string name="log_wifi_lost">🔌 Povezava Wi-Fi izgubljena, omrežje odvezano</string>
+    <string name="log_wifi_unbound">🔌 Vezava na omrežje Wi-Fi odstranjena</string>
+    <string name="log_tft_video_connected">🚀 Video TFT povezan, zaganjam kodirnik …</string>
+    <string name="log_tft_disconnected_waiting">🔌 TFT odklopljen — čakam na ponovno povezavo …</string>
+    <string name="log_stopping_mirroring">⏹️ Ustavljam zrcaljenje …</string>
+    <string name="log_all_stopped">⏹️ Vse ustavljeno</string>
+
+    <!-- HeartbeatManager Logs -->
+    <string name="log_hb_started">💓 Nit za utrip zagnana (interval 2 s)</string>
+    <string name="log_hb_sent">💓 Utrip #%1$d → %2$s</string>
+    <string name="log_hb_io_error">❌ V/I napaka utripa: %1$s</string>
+    <string name="log_hb_stopped">💓 Nit za utrip ustavljena (skupaj: %1$d)</string>
+
+    <!-- ProjectionEncoder Logs -->
+    <string name="log_encoder_starting">🎬 Zaganjam ProjectionEncoder …</string>
+    <string name="log_codec_output_res">   Izhodna ločljivost kodeka: %1$d×%2$d</string>
+    <string name="log_codec_ready">✅ MediaCodec pripravljen</string>
+    <string name="log_vd_creating">🖥️ Ustvarjam VirtualDisplay …</string>
+    <string name="log_vd_ready">✅ VirtualDisplay pripravljen (način %1$s)</string>
+    <string name="log_encoder_init_error">❌ Napaka pri inicializaciji kodirnika: %1$s</string>
+    <string name="log_codec_not_init">❌ Kodek ni inicializiran — je bil klican init()?</string>
+    <string name="log_encoding_loop_started">🎬 Zanka kodiranja H.264 zagnana</string>
+    <string name="log_eos_received">🎬 Prejet EOS — kodiranje končano</string>
+    <string name="log_encoding_error">❌ Napaka kodiranja: %1$s</string>
+    <string name="log_encoding_loop_finished">🎬 Zanka kodiranja končana (%1$d sličic)</string>
+    <string name="log_encoder_stopped">🎬 ProjectionEncoder ustavljen</string>
+    <string name="log_vd_recreating">🔄 Ponovno ustvarjam VirtualDisplay … (nov rob: %1$dpx, ločljivost: %2$d×%3$d)</string>
+
+    <!-- TcpServer Logs -->
+    <string name="log_tcp_all_closed">🔌 Vsi strežniki TCP zaprti</string>
+    <string name="log_write_data_error">❌ Napaka writeData (video): %1$s</string>
+    <string name="log_video_socket_opened">✅ Video ServerSocket odprt → VRATA %1$d</string>
+    <string name="log_tft_video_connected_ip">🔌 Video/projekcija TFT povezana! → %1$s:%2$d</string>
+    <string name="log_video_accept_error">❌ Napaka pri sprejemu videa: %1$s</string>
+    <string name="log_video_bind_error">❌ Napaka vezave video ServerSocket (vrata %1$d): %2$s</string>
+    <string name="log_tft_video_conn_lost">🔌 Video povezava TFT izgubljena</string>
+    <string name="log_control_socket_opened">✅ Nadzorni ServerSocket odprt → VRATA %1$d</string>
+    <string name="log_tft_control_connected_ip">🔌 Nadzor TFT povezan! → %1$s:%2$d</string>
+    <string name="log_control_bind_error">❌ Napaka vezave nadzornega ServerSocket (vrata %1$d): %2$s</string>
+    <string name="log_sending_tuc_query">📤 Pošiljam poizvedbo TUC GET na TFT …</string>
+    <string name="log_control_handshake_done">✅ Nadzorno rokovanje uspešno končano!</string>
+    <string name="log_tft_control_conn_lost">🔌 Nadzorna povezava TFT izgubljena</string>
+    <string name="log_binary_handshake_sent">📤 Binarni paketi rokovanja poslani na nadzorna vrata</string>
+    <string name="log_hb_socket_opened">✅ ServerSocket za utrip odprt → VRATA %1$d</string>
+    <string name="log_tft_dedicated_hb_connected">🔌 Namenski utrip TFT povezan! → %1$s:%2$d</string>
+    <string name="log_dedicated_hb_started">💓 Pošiljanje namenskega utripa zagnano (15457, interval 200 ms)</string>
+    <string name="log_dedicated_hb_stopped">⚠️ Pošiljanje namenskega utripa ustavljeno: %1$s</string>
+
+    <!-- BleManager Logs -->
+    <string name="log_ble_conn_starting">🔵 Vzpostavljam povezavo Bluetooth BLE: %1$s</string>
+    <string name="log_ble_not_supported">❌ Bluetooth ni podprt</string>
+    <string name="log_ble_invalid_mac">❌ Neveljaven naslov MAC: %1$s</string>
+    <string name="log_ble_disconnected">🔴 Povezava Bluetooth BLE prekinjena</string>
+
+    <!-- Map & Route Feature -->
+    <string name="btn_open_map">🗺️  Zemljevid in poti</string>
+    <string name="map_title">🗺️ Zemljevid in sledenje poti</string>
+    <string name="map_layer_maps">🗺️ Zemljevid OSM</string>
+    <string name="map_layer_topo">🏔️ OpenTopo</string>
+    <string name="map_layer_sat">🛰️ Satelit Esri</string>
+    <string name="map_layer_google_maps">🗺️ Google Maps</string>
+    <string name="map_layer_google_sat">🛰️ Google satelit</string>
+    <string name="map_layer_google_hybrid">🛰️ Google hibrid</string>
+    <string name="map_layer_offline">📂 Zemljevid brez povezave (.map)</string>
+    <string name="map_layer_3d">3D</string>
+    <string name="map_3d_offline">⬇️ Brez povezave</string>
+    <string name="map_3d_loading">🌍 Nalagam 3D zemljevid …</string>
+    <string name="toast_select_offline_map">Izberi datoteko OpenAndroMaps (.map)</string>
+    <string name="toast_offline_map_loaded">✅ Zemljevid brez povezave naložen: %1$s</string>
+    <string name="error_invalid_map_file">❌ Neveljavna ali neberljiva datoteka .map</string>
+    <string name="map_label_scale_title">🔤 Velikost besedila in oznak na zemljevidu</string>
+    <string name="map_layer_osm">🗺️ OSM</string>
+    <string name="map_layer_satellite">🛰️ Satelit</string>
+    <string name="map_btn_import">📂 Uvozi</string>
+    <string name="map_btn_routes">📋 Poti</string>
+    <string name="map_btn_gps">📍 GPS</string>
+    <string name="map_btn_gps_on">📍 GPS VKLOP</string>
+    <string name="map_btn_back">Nazaj</string>
+    <string name="map_btn_close">Zapri</string>
+    <string name="map_btn_favorites">⭐ Priljubljene</string>
+    <string name="btn_add_favorite">⭐ Priljubljena</string>
+    <string name="dialog_favorites_title">⭐ Priljubljene in iskanje</string>
+    <string name="search_address_hint">Išči naslov ali kraj …</string>
+    <string name="btn_search">Išči</string>
+    <string name="label_saved_favorites">Shranjene priljubljene</string>
+    <string name="label_search_results">Rezultati iskanja</string>
+    <string name="toast_favorite_saved">✅ Priljubljena shranjena: %1$s</string>
+    <string name="toast_favorite_deleted">🗑️ Priljubljena izbrisana</string>
+    <string name="dialog_save_fav_title">Shrani priljubljeno lokacijo</string>
+    <string name="dialog_save_fav_prompt">Vnesi ime za to lokacijo:</string>
+    <string name="no_favorites_yet">Še ni shranjenih priljubljenih</string>
+    <string name="no_results_found">Ni rezultatov iskanja</string>
+    <string name="map_btn_cancel">Prekliči</string>
+    <string name="map_btn_apply">Uporabi</string>
+    <string name="map_loaded_routes">Naložene poti</string>
+    <string name="map_route_style_title">Slog poti</string>
+    <string name="map_route_color">Barva:</string>
+    <string name="map_route_width">Debelina:</string>
+    <string name="map_route_preview">Predogled:</string>
+    <string name="map_route_toggle_visibility">Preklopi vidnost</string>
+    <string name="map_route_delete">Izbriši pot</string>
+    <string name="btn_clear_all_imported">🗑️ Počisti vse</string>
+    <string name="map_import_success">✅ Uvoženih poti: %1$d</string>
+    <string name="map_import_no_routes">⚠️ V datoteki ni poti</string>
+    <string name="map_import_unsupported_format">⚠️ Nepodprta oblika datoteke (%1$s). Izberi datoteko .gpx, .kml ali .kmz.</string>
+    <string name="map_import_error">❌ Napaka pri uvozu: %1$s</string>
+    <string name="map_gps_permission_denied">⚠️ Dovoljenje za lokacijo zavrnjeno</string>
+    <string name="map_waiting_gps">📍 Čakam na signal GPS …</string>
+
+    <!-- Map & Cursor Customization -->
+    <string name="map_settings_dialog_title">⚙️ Nastavitve zemljevida in kazalca</string>
+    <string name="map_route_settings_title">⚙️ Nastavitve poti in oznak</string>
+    <string name="map_route_line_color">🎨 Barva črte poti:</string>
+    <string name="map_route_line_width_format">Debelina: %1$dpx</string>
+    <string name="map_route_show_arrows">⬆️ Prikaži puščice smeri</string>
+    <string name="map_route_arrow_color">Barva puščic smeri:</string>
+    <string name="map_route_show_distance">📍 Prikaži oznake razdalje (km)</string>
+    <string name="map_route_distance_interval">Interval prikaza razdalje:</string>
+    <string name="map_route_reversed_toast">🔄 Smer poti %1$s obrnjena</string>
+    <string name="map_route_reverse_btn">Obrni pot</string>
+    <string name="color_red">🔴 Rdeča</string>
+    <string name="color_orange">🟠 Oranžna</string>
+    <string name="color_yellow">🟡 Rumena</string>
+    <string name="color_green">🟢 Zelena</string>
+    <string name="color_blue">🔵 Modra</string>
+    <string name="color_purple">🟣 Vijolična</string>
+    <string name="color_pink">🩷 Roza</string>
+    <string name="color_white">⚪ Bela</string>
+    <string name="color_cyan">🩵 Cian</string>
+    <string name="color_lime">🍏 Limeta</string>
+    <string name="label_map_theme">Tema zemljevida:</string>
+    <string name="map_theme_day">☀️ Dan</string>
+    <string name="map_theme_night">🌙 Noč</string>
+    <string name="map_theme_auto">🌗 Samodejno</string>
+    <string name="label_cursor_shape">Oblika kazalca lokacije:</string>
+    <string name="label_cursor_color">Barva kazalca:</string>
+    <string name="label_cursor_preview">Predogled kazalca:</string>
+    <string name="label_recording_color">Barva snemane sledi:</string>
+    <string name="btn_open_tft_padding">🖼️ Nastavitve robov</string>
+    <string name="cursor_shape_arrow">⬆️ Navigacijska puščica</string>
+    <string name="cursor_shape_motorcycle">🏍️ Motor</string>
+    <string name="cursor_shape_circle">🟢 Pika</string>
+    <string name="cursor_shape_crosshair">🎯 Križec</string>
+    <string name="cursor_shape_pin">📍 Žebljiček</string>
+
+    <!-- GPX Track Recording -->
+    <string name="map_btn_record_start">🔴 Snemaj</string>
+    <string name="gpx_export_title">💾 Shrani pot GPX</string>
+    <string name="label_gpx_filename">Ime datoteke:</string>
+    <string name="label_gpx_line_color">Barva črte poti:</string>
+    <string name="btn_gpx_save">Shrani GPX</string>
+    <string name="btn_gpx_discard">Zavrzi</string>
+    <string name="toast_gpx_saved">✅ Pot GPX shranjena v Prenose: %1$s</string>
+    <string name="dialog_exit_recording_title">⚠️ Snemanje poti je aktivno</string>
+    <string name="dialog_exit_recording_msg">Snemanje poti še poteka. Ali želiš ustaviti in shraniti pot?</string>
+    <string name="btn_stop_and_save">Ustavi in shrani</string>
+    <string name="btn_keep_recording">Nadaljuj snemanje</string>
+
+    <!-- Turn-by-Turn Navigation -->
+    <string name="nav_start_navigation">▶ Začni navigacijo</string>
+    <string name="nav_route_options">⚙️ Možnosti</string>
+    <string name="nav_avoid_tolls">Izogibaj se cestninam</string>
+    <string name="nav_toll_roads_toggle">🛣️ Cestninske ceste</string>
+    <string name="nav_avoid_highways">Izogibaj se avtocestam</string>
+    <string name="nav_route_preference">Vrsta poti:</string>
+    <string name="nav_type_fastest">⚡ Najhitrejša pot</string>
+    <string name="nav_type_shortest">📏 Najkrajša pot</string>
+    <string name="nav_stop">Ustavi</string>
+    <string name="nav_destination_selected">📍 Cilj izbran</string>
+    <string name="nav_arrived">🎉 Prispeli ste na cilj!</string>
+    <string name="nav_calculating">Računam pot …</string>
+    <string name="nav_recalculating">Ponovno računam pot …</string>
+    <string name="nav_rem_format">Preostalo: %1$s (%2$.1f km)</string>
+    <string name="label_initial_total_time">Skupaj: %1$s</string>
+    <string name="label_remaining_time">Preostalo: %1$s (%2$.1f km)</string>
+    <string name="unit_hours">h</string>
+    <string name="unit_minutes">min</string>
+    <string name="duration_format_hours_mins">%1$d %2$s %3$d %4$s</string>
+    <string name="duration_format_mins">%1$d %2$s</string>
+
+    <!-- App Mode Selection -->
+    <string name="label_app_mode">🎮 Način aplikacije:</string>
+    <string name="mode_mirroring">📺 Zrcaljenje zaslona</string>
+    <string name="mode_virtual_display">🖥️ Zrcaljenje navideznega zaslona</string>
+    <string name="mode_control_only">🎮 Samo upravljanje</string>
+    <string name="label_select_target_app">📱 Izberi aplikacijo za navidezni zaslon:</string>
+    <string name="option_internal_map">🗺️ Vgrajeni zemljevid OSM in nadzorna plošča KoveLink</string>
+    <string name="btn_select_language">🌐 Jezik: %1$s</string>
+    <string name="btn_select_bt_device">📶 Bluetooth: %1$s</string>
+    <string name="bt_device_none">Ni izbrano</string>
+
+    <!-- Control Only Mode -->
+    <string name="btn_start_controller">▶  Zaženi upravljanje</string>
+    <string name="btn_stop_controller">⏹  Ustavi upravljanje</string>
+    <string name="status_control_active">🎮 Upravljanje s krmilom aktivno</string>
+    <string name="notif_control_only_active">🎮 Upravljanje s krmilom aktivno</string>
+
+    <!-- Permission Buttons -->
+    <string name="btn_overlay_permission">⚠️ Dovoli prekrivanje</string>
+    <string name="btn_overlay_granted">✅ Prekrivanje OK</string>
+    <string name="btn_accessibility_permission">⚠️ Vklopi dostopnost</string>
+    <string name="btn_accessibility_granted">✅ Dostopnost OK</string>
+    <string name="permission_required_title">Potrebno je dovoljenje</string>
+    <string name="overlay_permission_required_msg">Za prikaz menija načinov krmila nad drugimi aplikacijami je potrebno dovoljenje za prekrivanje. Odobri dovoljenje »Prikaz prek drugih aplikacij«.</string>
+    <string name="btn_grant_permission">Odobri dovoljenje</string>
+    <string name="toast_enable_accessibility">V nastavitvah dostopnosti vklopi »KoveLink upravljanje s krmilom«</string>
+
+    <!-- Accessibility Service -->
+    <string name="accessibility_service_description">KoveLink upravljanje s krmilom omogoča, da gumbi na krmilu motorja upravljajo aplikacije na telefonu (povečava, premikanje, glasba, glasnost, preklop aplikacij).</string>
+
+    <!-- Handlebar Mode Names -->
+    <string name="handlebar_mode_title">🎮 Način krmila</string>
+    <string name="handlebar_mode_my_location">Nazaj na mojo lokacijo [ENT]</string>
+    <string name="handlebar_mode_toggle_3d">Preklopi 3D / 2D zemljevid [ENT]</string>
+    <string name="handlebar_mode_zoom">Povečaj / pomanjšaj</string>
+    <string name="handlebar_mode_pan_vertical">Premik gor / dol</string>
+    <string name="handlebar_mode_pan_horizontal">Premik levo / desno</string>
+    <string name="handlebar_mode_media_track">Naslednja / prejšnja skladba</string>
+    <string name="handlebar_mode_volume">Glasnost gor / dol</string>
+    <string name="handlebar_mode_play">Predvajaj [ENT]</string>
+    <string name="handlebar_mode_pause">Premor [ENT]</string>
+    <string name="handlebar_mode_app_switch">Naslednja / prejšnja aplikacija</string>
+    <string name="handlebar_mode_relaunch_stream">Ponovno zaženi prenos [ENT]</string>
+
+    <!-- Handlebar Toasts -->
+    <string name="toast_handlebar_mode_assigned">✅ Način krmila: %1$s</string>
+    <string name="toast_my_location">📍 Nazaj na mojo lokacijo</string>
+    <string name="toast_relaunching_stream">🚀 Ponovno zaganjam video prenos …</string>
+
+    <!-- TFT Frame Fit Dialog -->
+    <string name="btn_tft_fit">Nastavitve robov</string>
+    <string name="btn_tft_padding_settings">📺 Črni pasovi / robovi TFT</string>
+    <string name="tft_fit_dialog_title">📺 Prilagoditev slike na TFT</string>
+    <string name="tft_fit_dialog_description">Nastavi višino zgornjega in spodnjega črnega pasu, da se zemljevid poravna z zaslonom TFT na motorju:</string>
+    <string name="tft_fit_top_label">Zgornji črni pas: %1$d dp</string>
+    <string name="tft_fit_bottom_label">Spodnji črni pas: %1$d dp</string>
+    <string name="tft_fit_reset">Ponastavi</string>
+    <string name="btn_cancel">Prekliči</string>
+    <string name="tft_fit_save">Shrani in zapri</string>
+    <string name="toast_tft_fit_saved">✅ Prilagoditev slike TFT shranjena</string>
+
+    <!-- About & Debug Toggle -->
+    <string name="btn_about">ℹ️ O aplikaciji</string>
+    <string name="about_dialog_title">O aplikaciji KoveLink</string>
+    <string name="about_developer_credit">KoveLink je izpeljanka aplikacije KoveMirror avtorja H. Nakturka (github.com/nakturk/kovemirror), razširjena z navigacijo Google Maps pri zaklenjenem telefonu, omejitvijo omrežnega dostopa samo na motor in slovenskim prevodom. Neuradna aplikacija, ni povezana s podjetjem Kove.</string>
+    <string name="btn_toggle_debug_show">📋 Prikaži terminal</string>
+    <string name="btn_toggle_debug_hide">📋 Skrij terminal</string>
+
+    <!-- Screen Dim (Energy Save) -->
+    <string name="btn_screen_dim_off">🔆 Zaslon: običajno</string>
+    <string name="btn_screen_dim_on">🌑 Zaslon: zatemnjen</string>
+    <string name="toast_screen_dimmed">🌑 Zaslon zatemnjen za varčevanje. Zrcaljenje se nadaljuje.</string>
+    <string name="toast_screen_bright">🔆 Svetlost zaslona obnovljena.</string>
+
+    <!-- Route Weather -->
+    <string name="toast_route_weather_on">🌤️ Vremenska napoved ob poti vklopljena</string>
+    <string name="toast_route_weather_off">🌤️ Vremenska napoved ob poti izklopljena</string>
+    <string name="weather_temperature">🌡️ Temperatura: %1$.1f °C</string>
+    <string name="weather_precipitation_prob">💧 Verjetnost dežja: %1$d %% (%2$.1f mm)</string>
+    <string name="weather_wind">💨 Veter: %1$.1f km/h</string>
+    <string name="weather_distance_from_start">📍 Od začetka: %1$.1f km</string>
+
+    <!-- Sharp Curve Warnings -->
+    <string name="label_curve_warnings_section">🏍️ Opozorila na ostre ovinke in serpentine</string>
+    <string name="label_curve_warnings_title">Oznake ostrih ovinkov in serpentin</string>
+    <string name="label_curve_warnings_desc">Barvne oznake ovinkov neposredno na zemljevidu</string>
+    <string name="curve_hairpin">Polkrožni ovinek / serpentina</string>
+    <string name="curve_sharp_left">Oster levi ovinek</string>
+    <string name="curve_sharp_right">Oster desni ovinek</string>
+    <string name="curve_medium_left">Zmeren levi ovinek</string>
+    <string name="curve_medium_right">Zmeren desni ovinek</string>
+    <string name="curve_turn_angle">📐 Kot ovinka: %1$d°</string>
+
+    <!-- Modern Settings UI -->
+    <string name="label_live_preview">PREDOGLED ZEMLJEVIDA IN KAZALCA V ŽIVO</string>
+    <string name="label_driving_features">🛡️ Funkcije za vožnjo in varnost</string>
+    <string name="label_route_weather_title">Vremenska napoved ob poti</string>
+    <string name="label_route_weather_desc">Oznake temperature in padavin vzdolž poti</string>
+    <string name="label_tft_settings_title">📺 Robovi zaslona TFT</string>
+    <string name="label_tft_settings_desc">Nastavi zgornji in spodnji črni pas za TFT na motorju</string>
+    <string name="btn_save_settings">💾 Shrani in uporabi</string>
+
+    <!-- KoveLink additions -->
+    <string name="nav_listener_label">KoveLink navigacija (Google Maps / Waze)</string>
+    <string name="nav_following_route">Sledim poti</string>
+    <string name="notif_tft_map_navigation">🏍️ Zemljevid in navigacija na TFT</string>
+    <string name="wifi_ssid_not_connected">Ni povezave</string>
+    <string name="wifi_ssid_unknown">Neznano</string>
+    <string name="label_locked_nav_title">🔒 Navigacija z zaklenjenim telefonom</string>
+    <string name="label_locked_nav_hint">V Google Maps zaženi navigacijo, nato telefon zakleni in ga spravi v žep. KoveLink prebere obvestilo navigacije Google Maps in na zemljevidu TFT prikaže naslednji zavoj, razdaljo in čas prihoda. Potrebni sta obe spodnji dovoljenji.</string>
+    <string name="btn_notification_access">⚠️ Dovoli dostop do obvestil</string>
+    <string name="btn_notification_access_granted">✅ Dostop do obvestil OK</string>
+    <string name="toast_enable_notification_access">Na seznamu vklopi »KoveLink navigacija«</string>
+    <string name="toast_notification_access_granted">✅ Dostop do obvestil je že dovoljen</string>
+    <string name="btn_battery_optimization">⚠️ Dovoli neomejeno baterijo</string>
+    <string name="btn_battery_optimization_granted">✅ Baterija neomejena</string>
+    <string name="toast_battery_already_unrestricted">✅ Optimizacija baterije je za KoveLink že izklopljena</string>
+    <string name="dialog_bg_location_title">Lokacija pri zaklenjenem telefonu</string>
+    <string name="dialog_bg_location_message">Da se zemljevid na TFT premika tudi pri zaklenjenem telefonu, mora biti dovoljenje za lokacijo nastavljeno na »Vedno dovoli«. Na naslednjem zaslonu izberi to možnost.</string>
+    <string name="btn_video_fps">🎞️ Hitrost sličic videa</string>
+    <string name="btn_video_fps_value">🎞️ Video: %1$d sl/s (%2$s)</string>
+    <string name="fps_mode_smooth">gladko, največ gretja</string>
+    <string name="fps_mode_balanced">uravnoteženo</string>
+    <string name="fps_mode_saver">varčevanje baterije</string>
+    <string name="toast_fps_applies_next_start">Velja ob naslednjem zagonu zrcaljenja</string>
+</resources>

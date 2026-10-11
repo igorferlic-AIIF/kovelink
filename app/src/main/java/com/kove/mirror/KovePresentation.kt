@@ -49,6 +49,7 @@ class KovePresentation(
     // Navigation Turn-by-Turn HUD
     private lateinit var navBanner: LinearLayout
     private lateinit var tvNavTurnIcon: TextView
+    private lateinit var ivNavTurnIcon: android.widget.ImageView
     private lateinit var tvNavTurnInstruction: TextView
     private lateinit var tvNavTurnDistance: TextView
     private lateinit var tvNavEta: TextView
@@ -185,6 +186,7 @@ class KovePresentation(
 
         navBanner = findViewById(R.id.presentationNavBanner)
         tvNavTurnIcon = findViewById(R.id.tvNavTurnIcon)
+        ivNavTurnIcon = findViewById(R.id.ivNavTurnIcon)
         tvNavTurnInstruction = findViewById(R.id.tvNavTurnInstruction)
         tvNavTurnDistance = findViewById(R.id.tvNavTurnDistance)
         tvNavEta = findViewById(R.id.tvNavEta)
@@ -362,8 +364,12 @@ class KovePresentation(
         // 1. Sync loaded routes
         onRoutesChanged(MapStateHolder.loadedRoutes.toList())
 
-        // 2. Sync navigation state
+        // 2. Sync navigation state (internal route or external app such as Google Maps)
         onNavigationStateChanged(MapStateHolder.isNavigating, MapStateHolder.activeNavigationRoute)
+        ExternalNavState.addListener(externalNavListener)
+        if (!MapStateHolder.isNavigating) {
+            onExternalNavChanged(ExternalNavState.current)
+        }
 
         // 3. Sync weather points
         onWeatherUpdated(MapStateHolder.routeWeatherPoints.toList())
@@ -397,6 +403,9 @@ class KovePresentation(
 
             if (isNavigating && route != null && route.geometryPoints.isNotEmpty()) {
                 navBanner.visibility = View.VISIBLE
+                // Internal navigation draws its own emoji arrow; hide any external app icon.
+                ivNavTurnIcon.visibility = View.GONE
+                tvNavTurnIcon.visibility = View.VISIBLE
 
                 navigationPolyline = Polyline().apply {
                     setPoints(route.geometryPoints)
@@ -423,9 +432,74 @@ class KovePresentation(
                     updateNavigationBanner(loc, route)
                 }
             } else {
-                navBanner.visibility = View.GONE
+                // No internal route: fall back to Google Maps / Waze guidance when available.
+                applyExternalNav(ExternalNavState.current)
             }
             mapView.invalidate()
+        }
+    }
+
+    // ─── External navigation (Google Maps / Waze notification) ──────────────
+
+    private val externalNavListener = object : ExternalNavState.Listener {
+        override fun onExternalNavChanged(maneuver: ExternalNavState.Maneuver?) {
+            this@KovePresentation.onExternalNavChanged(maneuver)
+        }
+    }
+
+    private fun onExternalNavChanged(maneuver: ExternalNavState.Maneuver?) {
+        mainHandler.post {
+            // Internal turn-by-turn has priority; it owns the banner while active.
+            if (MapStateHolder.isNavigating && MapStateHolder.activeNavigationRoute != null) return@post
+            applyExternalNav(maneuver)
+        }
+    }
+
+    /** Must run on the main thread. */
+    private fun applyExternalNav(maneuver: ExternalNavState.Maneuver?) {
+        if (maneuver == null || !ExternalNavState.isActive) {
+            navBanner.visibility = View.GONE
+            ivNavTurnIcon.visibility = View.GONE
+            tvNavTurnIcon.visibility = View.VISIBLE
+            return
+        }
+
+        val icon = maneuver.icon
+        if (icon != null) {
+            ivNavTurnIcon.setImageBitmap(icon)
+            ivNavTurnIcon.visibility = View.VISIBLE
+            tvNavTurnIcon.visibility = View.GONE
+        } else {
+            ivNavTurnIcon.visibility = View.GONE
+            tvNavTurnIcon.visibility = View.VISIBLE
+            tvNavTurnIcon.text = guessArrow(maneuver.instruction)
+        }
+
+        tvNavTurnInstruction.text = if (maneuver.road.isNotEmpty()) {
+            "${maneuver.instruction}\n${maneuver.road}"
+        } else {
+            maneuver.instruction
+        }
+        tvNavTurnDistance.text = maneuver.distanceText
+        val source = if (maneuver.sourcePackage == NavNotificationListener.PKG_WAZE) "Waze" else "Google Maps"
+        tvNavEta.text = if (maneuver.etaText.isNotEmpty()) "${maneuver.etaText} · $source" else source
+        navBanner.visibility = View.VISIBLE
+    }
+
+    /** Fallback emoji arrow when the nav app did not attach an icon (matches internal nav style). */
+    private fun guessArrow(instruction: String): String {
+        val t = instruction.lowercase(Locale.getDefault())
+        return when {
+            t.contains("u-turn") || t.contains("uturn") || t.contains("polkrožno") || t.contains("obrn") -> "↩️"
+            t.contains("roundabout") || t.contains("krožišč") || t.contains("krožn") -> "🔄"
+            t.contains("sharp left") || t.contains("ostro levo") -> "⬅️"
+            t.contains("sharp right") || t.contains("ostro desno") -> "➡️"
+            t.contains("slight left") || t.contains("rahlo levo") -> "↖️"
+            t.contains("slight right") || t.contains("rahlo desno") -> "↗️"
+            t.contains("left") || t.contains("levo") -> "⬅️"
+            t.contains("right") || t.contains("desno") -> "➡️"
+            t.contains("arriv") || t.contains("cilj") || t.contains("destination") -> "📍"
+            else -> "⬆️"
         }
     }
 
@@ -642,6 +716,7 @@ class KovePresentation(
 
     override fun onStop() {
         MapStateHolder.removeListener(this)
+        ExternalNavState.removeListener(externalNavListener)
         try {
             locationManager?.removeUpdates(this)
         } catch (_: Exception) {}

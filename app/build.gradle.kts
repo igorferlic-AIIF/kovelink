@@ -1,46 +1,24 @@
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Properties
-
-val versionPropsFile = rootProject.file("version.properties")
-val versionProps = Properties()
-
-if (versionPropsFile.exists()) {
-    versionProps.load(FileInputStream(versionPropsFile))
-} else {
-    versionProps["build_number"] = "1"
-    versionProps["last_build_date"] = SimpleDateFormat("yyyy.MM.dd").format(Date())
-}
-
-val currentBuildNumber = (versionProps.getProperty("build_number") ?: "1").toInt()
-val todayDateStr = SimpleDateFormat("yyyy.MM.dd").format(Date())
-
-val computedVersionCode = currentBuildNumber
-val computedVersionName = "$todayDateStr.$currentBuildNumber"
-
-// Increment build number for next invocation
-val nextBuildNumber = currentBuildNumber + 1
-versionProps["build_number"] = nextBuildNumber.toString()
-versionProps["last_build_date"] = todayDateStr
-versionProps.store(FileOutputStream(versionPropsFile), "Updated by Gradle Build")
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
+
+// KoveLink version. Bump VERSION_NAME on every release; VERSION_CODE must only ever increase.
+val kovelinkVersionCode = 100
+val kovelinkVersionName = "1.0.0"
 
 android {
     namespace = "com.kove.mirror"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.kove.mirror"
+        // Different applicationId than upstream KoveMirror (com.kove.mirror) so both apps
+        // can be installed side by side on the same phone.
+        applicationId = "si.kovelink.app"
         minSdk = 26
         targetSdk = 34
-        versionCode = computedVersionCode
-        versionName = computedVersionName
+        versionCode = kovelinkVersionCode
+        versionName = kovelinkVersionName
     }
 
     buildTypes {
@@ -51,6 +29,8 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            // Debug-signed release so the APK can be sideloaded straight from CI.
+            // Replace with a real keystore before distributing to other people.
             signingConfig = signingConfigs.getByName("debug")
         }
     }
@@ -68,29 +48,20 @@ android {
         viewBinding = true
         buildConfig = true
     }
-}
 
-// Copy compiled release APK to root `builds/` folder for GitHub
-tasks.register("copyReleaseApkToBuilds") {
-    doLast {
-        val apkFile = file("build/outputs/apk/release/app-release.apk")
-        if (apkFile.exists()) {
-            val buildsDir = rootProject.file("builds")
-            if (!buildsDir.exists()) {
-                buildsDir.mkdirs()
-            }
-            val versionedApk = File(buildsDir, "KoveMirror-v${computedVersionName}.apk")
-            val latestApk = File(buildsDir, "KoveMirrorLatest.apk")
-            apkFile.copyTo(versionedApk, overwrite = true)
-            apkFile.copyTo(latestApk, overwrite = true)
-            println("📦 [KoveMirror Build] Copied APK to ${versionedApk.absolutePath}")
-            println("📦 [KoveMirror Build] Updated ${latestApk.absolutePath}")
+    lint {
+        // Other locales only fall back to English for the newest strings; never fail the build on it.
+        abortOnError = false
+        disable += setOf("MissingTranslation")
+    }
+
+    applicationVariants.all {
+        val variantName = name
+        outputs.all {
+            (this as? com.android.build.gradle.internal.api.BaseVariantOutputImpl)?.outputFileName =
+                "KoveLink-v${kovelinkVersionName}-${variantName}.apk"
         }
     }
-}
-
-tasks.matching { it.name == "assembleRelease" }.configureEach {
-    finalizedBy("copyReleaseApkToBuilds")
 }
 
 dependencies {

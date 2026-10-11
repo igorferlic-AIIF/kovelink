@@ -330,6 +330,23 @@
                 android:layout_marginBottom="8dp" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnVideoFps"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:text="@string/btn_video_fps"
+                android:textSize="12sp"
+                android:textColor="#F0F6FC"
+                android:textAllCaps="false"
+                android:background="@drawable/bg_button_secondary"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:layout_marginBottom="8dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSelectSecondaryApp"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
@@ -338,6 +355,66 @@
                 android:textColor="#F0F6FC"
                 android:textAllCaps="false"
                 android:background="@drawable/bg_button_secondary"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:minHeight="0dp"
+                android:minWidth="0dp" />
+        </LinearLayout>
+
+        <!-- Locked-phone navigation card (KoveLink) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card"
+            android:padding="14dp"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_locked_nav_title"
+                android:textColor="#F0F6FC"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_locked_nav_hint"
+                android:textColor="#8B949E"
+                android:textSize="11sp"
+                android:layout_marginBottom="10dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnNotificationAccess"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:text="@string/btn_notification_access"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:textAllCaps="false"
+                android:background="#D97706"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:layout_marginBottom="8dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnBatteryOptimization"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:text="@string/btn_battery_optimization"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:textAllCaps="false"
+                android:background="#D97706"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:paddingTop="0dp"

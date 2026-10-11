@@ -134,6 +134,16 @@
             android:textSize="24sp"
             android:layout_marginEnd="10dp" />
 
+        <!-- Manoeuvre arrow supplied by Google Maps / Waze (external navigation) -->
+        <ImageView
+            android:id="@+id/ivNavTurnIcon"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="10dp"
+            android:scaleType="fitCenter"
+            android:contentDescription="@null"
+            android:visibility="gone" />
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -144,7 +154,7 @@
                 android:id="@+id/tvNavTurnInstruction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Rota Takip Ediliyor"
+                android:text="@string/nav_following_route"
                 android:textColor="#FFFFFF"
                 android:textSize="15sp"
                 android:textStyle="bold"

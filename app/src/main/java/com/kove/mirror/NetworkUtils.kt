@@ -60,9 +60,10 @@ object NetworkUtils {
         return try {
             val wm = context.applicationContext
                 .getSystemService(Context.WIFI_SERVICE) as WifiManager
-            wm.connectionInfo.ssid?.removeSurrounding("\"") ?: "Bağlı değil"
+            wm.connectionInfo.ssid?.removeSurrounding("\"")
+                ?: context.getString(R.string.wifi_ssid_not_connected)
         } catch (e: Exception) {
-            "Bilinmiyor"
+            context.getString(R.string.wifi_ssid_unknown)
         }
     }
 }

@@ -1,231 +1,64 @@
-# KoveMirror
+# KoveLink
 
-# Latest APK is in builds directory. "KoveMirrorLatest.apk", right click and then select save as to download.
+Android aplikacija, ki zaslon telefona (Google Maps, Waze, Kurviger, Calimoto …) prenaša na vgrajeni 7" TFT zaslon motorjev **Kove 800X Pro / 800X Rally / 800 GT (2024–2026)** – in ki navigacijo Google Maps prikazuje na TFT tudi takrat, ko je **telefon zaklenjen v žepu**.
 
-# 🇹🇷 KoveMirror (Türkçe)
+KoveLink je izpeljanka (fork) odprtokodnega projekta [nakturk/kovemirror](https://github.com/nakturk/kovemirror). Celoten protokol BLE + Wi‑Fi/TCP in vgrajeni zemljevid sta delo H. Nakturka; KoveLink dodaja spodnje spremembe. Neuradna aplikacija, ni povezana s podjetjem Kove.
 
-(Bu metin ve program AI tarafından geliştirilmiştir.)
-
-KoveMirror, Kove 800 (800X Pro vb.) model motosikletlerin TFT ekranlarına telefonunuzun ekranını yansıtmanızı (Screen Mirroring) sağlayan açık kaynaklı bir Android uygulamasıdır. Orijinal ThinkerRide sistemine alternatif olarak geliştirilmiş olup, tamamen yerel ağ üzerinden bağımsız çalışır. 
-
-Motosikletin navigasyon için TFT ekranında gösterdiği görüntüyü, herhangi bir üçüncü taraf uygulamaya bağımlı kalmadan Google Maps, Yandex Navigasyon, Kurviger gibi kendi istediğiniz uygulamalarla kullanabilmenizi sağlar. Ayrıca uygulama içinde motosiklet sürüşü için optimize edilmiş yerleşik **2D/3D Harita, Rota Import (GPX/KML/KMZ), Canlı Rota Hava Durumu, Sert Viraj İkazları, Adım Adım Navigasyon ve Ekran Kapalıyken Kesintisiz TFT Haritası** özellikleri bulunur.
-
-<p align="center">
-  <img src="screenshots/main_screen.png" width="32%" alt="KoveMirror Ana Ekran" />
-  &nbsp; &nbsp; &nbsp; &nbsp;
-  <img src="screenshots/map_screen.png" width="32%" alt="Harita ve Rota Ekranı" />
-</p>
+> **English:** fork of KoveMirror with (1) Google Maps / Waze turn‑by‑turn shown on the TFT while the phone is locked, read from the navigation notification, (2) TCP servers that accept only the bike (no more streaming the phone screen to anyone on a shared Wi‑Fi), (3) foreground‑service `location` type so GPS keeps flowing when locked, (4) Slovenian translation, (5) frame‑rate presets for battery, (6) Play‑policy manifest clean‑up and a GitHub Actions build. Details in [CHANGELOG.md](CHANGELOG.md) and [IZBOLJSAVE.md](IZBOLJSAVE.md).
 
 ---
 
-## 🗺️ Harita, Rota ve Navigasyon Özellikleri
+## Kaj je novega v primerjavi s KoveMirror
 
-Uygulama içinde **"Harita & Rota"** butonu ile erişilebilen gelişmiş harita modülü şu özellikleri sunar:
+| | KoveMirror | KoveLink |
+|---|---|---|
+| Google Maps na TFT, telefon **odklenjen** | ✅ (zrcaljenje) | ✅ (zrcaljenje) |
+| Google Maps na TFT, telefon **zaklenjen** | ❌ slika zamrzne, Google Maps se ne da zagnati na navideznem zaslonu | ✅ naslednji zavoj, razdalja in ETA iz obvestila Google Maps na vgrajenem zemljevidu |
+| Kdo se lahko poveže na strežnik videa | kdorkoli v istem Wi‑Fi omrežju | samo motor (prehod 192.168.10.1) |
+| GPS pri zaklenjenem telefonu (Android 14) | se ustavi/zadrži | teče (`location` tip storitve + dovoljenje »vedno«) |
+| Jeziki | tr, en, el, es, it, fr | + **slovenščina** |
+| Hitrost sličic | fiksno 30 | 30 / 24 / 15 (manj gretja telefona) |
+| QUERY_ALL_PACKAGES, cleartext, backup | vklopljeno | odstranjeno |
+| Gradnja APK | ročno v Android Studiu | samodejno v GitHub Actions |
 
-1. **4 Harita Katmanı Seçeneği (2D & 3D)**:
-   - **Harita (OSM)**: OpenStreetMap Mapnik standart vektör haritası.
-   - **Topo**: OpenTopoMap arazi ve topografya haritası.
-   - **Uydu (Sat)**: ESRI World Imagery yüksek çözünürlüklü uydu görüntüsü katmanı.
-   - **🌐 3D Vektör & Arazi Haritası (MapLibre)**: 3 boyutlu bina, arazi ve sürüş perspektifi sunan modern 3D harita katmanı. Gidon tuşu veya ekrandan tek tıkla 2D/3D arasında anında geçiş.
+## Kako deluje navigacija z zaklenjenim telefonom
 
-2. **📱 Ekran Kapalıyken Kesintisiz TFT Navigasyonu (Virtual Display Presentation)**:
-   - Telefon ekranı kapandığında / kilitlendiğinde bile arka planda çalışan sanal ekran mimarisi (`VirtualDisplay` & `KovePresentation`) sayesinde motosikletin TFT kadranına kesintisiz harita, canlı GPS takibi, yüklü rotalar ve adım adım navigasyon akmaya devam eder.
-   - Telefonu tekrar açtığınızda telefon ile TFT harita durumları kusursuz olarak çift yönlü senkronize olur.
+1. Zrcaljenje zaslona (MediaProjection) ob zaklepu telefona **vedno** zamrzne – to je omejitev Androida, ne aplikacije.
+2. Google Maps se ne da zagnati na navideznem zaslonu, ki ga ustvari tuja aplikacija (Android zavrne zagon aktivnosti brez `allowEmbedded`). KoveMirror je v tem primeru tiho prikazal svoj zemljevid brez navodil.
+3. KoveLink zato prebere **obvestilo navigacije Google Maps** (NotificationListenerService), ki se posodablja tudi pri zaklenjenem telefonu, in na vgrajenem zemljevidu OSM prikaže Googlovo puščico, besedilo zavoja, razdaljo in ETA. Pot računa Google, zemljevid riše KoveLink.
 
-3. **🌤️ Canlı Rota Hava Durumu (Route Weather Forecast)**:
-   - Rota güzergahı boyunca açık kaynaklı Open-Meteo entegrasyonu ile sıcaklık (°C), yağış türü, yağış ihtimali (%) ve rüzgar hızı rozetleri harita üzerinde gösterilir.
-   - Rozetler 2D ve 3D haritalarda rota çizgisinin en üstünde net okunur şekilde konumlanır; dokunulduğunda detaylı hava durumu bilgisi verir.
+Praktično: v Google Maps zaženi navigacijo → zakleni telefon → na TFT se prikaže zemljevid s tvojo pozicijo in Googlovim naslednjim zavojem. Ko telefon odkleneš, se vrne polno zrcaljenje Google Maps.
 
-4. **⚡ Sert Viraj & U-Dönüş Uyarı Sistemi (Sharp Curve & Hairpin Warnings)**:
-   - %100 çevrimdışı geometrik analiz: İnternet gerektirmeden rota geometrisindeki açı değişimleri ve viraj yarıçapını anında analiz eder.
-   - Harita üzerinde viraj başlarında renk kodlu kompakt rozetler gösterir:
-     - 🔴 **Kırmızı (`⚠️`):** U-Viraj / Hairpin ($180^\circ$ dönüşler / İğne deliği)
-     - 🟠 **Turuncu (`⬅️` / `➡️`):** Sert Viraj ($90^\circ$ ve üzeri keskin virajlar)
-     - 🟡 **Sarı (`↖️` / `↗️`):** Orta Sertlikte Viraj
+## Namestitev
 
-5. **KML / KMZ / GPX Rota Import & Takip**:
-   - GPX, KML ve KMZ formatındaki sürüş rotalarını harita üzerine yükleme.
-   - Renk ve çizgi kalınlığı ile özelleştirme, yön okları ve km mesafe taşları ekleme.
-   - Birden fazla rotayı aynı anda yükleme, görünürlüklerini açıp kapama, yönünü tersine çevirme (Reverse Route) veya silme.
+1. Prenesi `KoveLink-vX.Y.Z-release.apk` iz **Releases** (ali iz **Actions → Build APK → Artifacts**).
+2. Namesti (dovoli namestitev iz neznanih virov). Lahko sobiva s KoveMirror in KF Mirror.
+3. Na TFT: dolg pritisk **ENT** → nastavitve zaslona → *Phone Screen projection Navigation* (QR kode ne skeniraj, aplikacijo že imaš).
+4. Telefon seznani z motorjem prek Bluetootha (naprava `CQKY_…`).
 
-6. **📍 Haritada Uzun Basarak Navigasyon (OSRM Routing)**:
-   - Harita üzerinde herhangi bir yere **uzun basarak (long press)** hedef pini bırakma ve **"Navigasyonu Başlat"** seçeneği.
-   - Canlı **Turn Banner**: Sıradaki dönüş yönü, manevraya kalan mesafe ve toplam kalan süre/km takibi.
+## Nastavitev (enkrat)
 
-7. **🏎️ Canlı Hız Göstergesi ve Hız Limiti Uyarısı**:
-   - Anlık GPS hızını gösteren dinamik hız göstergesi.
-   - Bulunduğunuz yolun yasal hız sınırını tespit etme ve hız aşıldığında dinamik görsel ikaz.
+V aplikaciji na kartici **🔒 Navigacija z zaklenjenim telefonom**:
 
-8. **🔴 GPX Canlı Rota Kaydedici (Track Recorder)**:
-   - Sürüşünüzü harita üzerinden takip ederken gerçek zamanlı olarak GPX formatında cihazınıza kaydetme.
+- **Dovoli dostop do obvestil** → vklopi *KoveLink navigacija*.
+- **Dovoli neomejeno baterijo** (sicer Samsung/Xiaomi storitev med vožnjo ubijejo).
+- Ob prvem zagonu potrdi lokacijo in nato **»Vedno dovoli«** (dovoljenje v ozadju).
+- Priporočeno: v nastavitvah Wi‑Fi telefona vklopi *Uporabi mobilne podatke, ko Wi‑Fi nima interneta* – telefon je povezan na Wi‑Fi motorja, zemljevidi pa pridejo prek mobilnih podatkov.
 
-9. **⚙️ Yenilenen Profesyonel Harita Ayarları (Map Settings)**:
-   - **Canlı Önizleme Kutusu:** Seçilen temayı, imleci ve iz rengini anında simüle eden Hero Preview kartı.
-   - **Segmented Butonlar:** Gündüz / Gece / Otomatik tema seçimi (`☀️ Gündüz | 🌙 Gece | 🔄 Otomatik`).
-   - **Görsel İmleç Kartları:** 5 farklı konum imleci (`⬆️ Ok`, `🏍️ Motor`, `🔵 Nokta`, `🎯 Hedef`, `📍 İğne`) ve 7 renkli palet.
+Po želji: **🎞️ Video** preklopi na 24 ali 15 sl/s, če se telefon pregreva.
 
----
+## Gradnja iz izvorne kode
 
-## ⚡ Sistem ve Gelişmiş Özellikler
+Brez Android Studia: forkaj repozitorij na GitHub, `git push` na vejo `main` → delovni tok **Build APK** zgradi APK in ga pripne kot artefakt; `git tag v1.0.1 && git push --tags` ustvari Release z APK‑jem.
 
-- **🔋 Ekran Karartma / Enerji Tasarrufu Modu (Dimming):** Yansıtma açıkken telefonun aşırı ısınmasını engellemek ve pil tüketimini düşürmek amacıyla telefon ekranını karartma seçeneği.
-- **🎮 Gidon Kumandası Entegrasyonu & Tek Dokunuşla Yeniden Başlatma:** Motosikletin gidon tuşları ile harita kontrolü ve yayın koptuğunda **[ENT]** tuşuyla elinizi gidondan çekmeden tek dokunuşla yayını anında yeniden başlatma (`One-Touch Relaunch`).
-- **📱 İkinci Ekrana (TFT) Uygulama Yansıtma:** `ActivityOptions.setLaunchDisplayId` ile telefonun ana ekranını serbest bırakırken Kove TFT Sanal Ekranına doğrudan **DMD2**, **OsmAnd** veya harici navigasyon uygulamalarını yansıtma.
-- **🌐 6 Dil Desteği:** 🇹🇷 Türkçe, 🇬🇧 İngilizce, 🇪🇸 İspanyolca, 🇮🇹 İtalyanca, 🇬🇷 Yunanca ve 🇫🇷 Fransızca arayüz desteği.
-- **🛡️ Gelişmiş Kararlılık & BLE MTU 512 Müzakeresi:** Yeni gösterge yazılımları (SV=2.0.4) için BLE MTU 512 müzakeresi, MediaProjection token önbelleğe alma, BLE komut kuyruğu yönetimi ve optimize edilmiş TCP soket yönetimi *(Dominik Ladoš'un katkılarıyla)*.
+Lokalno: Android Studio (JDK 17, SDK 34) → `./gradlew assembleRelease` → `app/build/outputs/apk/release/`.
 
----
+## Licenca
 
-## Protokol Yapısı ve İletişim
+Izvorni projekt KoveMirror **nima licenčne datoteke**, kar formalno pomeni »vse pravice pridržane«. KoveLink je zato namenjen osebni uporabi; pred javno distribucijo prosi avtorja (@nakturk) za dovoljenje ali licenco (npr. MIT/Apache‑2.0). Spremembe v KoveLink (NavNotificationListener, ExternalNavState, varnostne popravke, prevod) so na voljo pod MIT.
 
-Kove TFT ekranları, telefon ile haberleşmek için Bluetooth (BLE) ve Wi-Fi (TCP) altyapısı kullanır:
+## Varnost in zasebnost
 
-### 1. Wi-Fi Ağı (Network)
-Motosiklet, kendi üzerinde bir Wi-Fi Hotspot oluşturur (Genellikle `192.168.10.1` IP adresi). Telefon, bu ağa bağlandığında IP adresi alır (`192.168.10.2`). Uygulama `bindProcessToNetwork` kullanarak telefonun mobil verisi açık olsa bile KoveMirror'un sadece motosikletin ağı üzerinden iletişim kurmasını garanti eder. Bu sayede telefondaki diğer uygulamalar arka planda mobil veri üzerinden internete bağlanmaya devam edebilir (Telefonunuzun Wi-Fi ayarlarından "İnternetsiz ağlarda mobil veriyi kullan" seçeneğini açmanız önerilir).
-
-### 2. TCP Portları
-Telefon (KoveMirror uygulaması), motosikletin bağlanması için 3 farklı TCP sunucu soketi (Server Socket) açar:
-- **Port 17818 (Control Port):** İki cihaz arasındaki el sıkışma (handshake), versiyon bilgisi aktarımı ve sensör / araç durumu için kullanılır.
-- **Port 15456 (Video Port):** `MediaProjection` API'den alınan ve H.264 formatında encode edilen ekran videosunun TFT'ye aktarıldığı ana porttur.
-- **Port 15457 (Dedicated Heartbeat Port):** Bağlantının koptuğunu anında tespit etmek için sürekli olarak (200ms aralıklarla) ping/kalp atışı gönderilen sokettir.
-
-### 3. Bluetooth (BLE) Eşleşmesi ve Handshake
-Cihazların haberleşmeye başlaması için BLE zorunludur:
-- Uygulama `0000e0ff-...` Service UUID değerine bağlanır.
-- `FFE1` karakteristik adresine yazma (Write) işlemi yapar, `FFE2` üzerinden bildirimleri (Notify) dinler.
-- Telefondan `PAIR` komutu (msg_id: 27) gönderilir. TFT `result: 1` yanıtını verdikten sonra, uygulama yansıtmayı aktifleştiren (`msg_id: 25, msg_type: 23`) JSON paketini gönderir.
-
-### 4. Control Handshake & Heartbeat
-- BLE üzerinden yansıtma aktif edildikten sonra TFT, telefonun 17818 portuna bağlanır.
-- TFT tarafından gönderilen `TUC` (Token) paketi alınır.
-- Binary (Hex) formatında karşılıklı komutlar gönderilir.
-- **2026 Modeller İçin Önemli:** 2026 model Kove TFT ekranları güvenlik amacıyla her 1 saniyede bir Control Portu üzerinden `02 01 00 00 00 00` şeklinde Heartbeat gönderir. Uygulamanın Video soketini açması için bu paketi "yankılayarak (echo)" TFT'ye geri göndermesi şarttır.
-
-## Derleme Gereksinimleri (Build Instructions)
-
-Bu projeyi derleyebilmek için:
-- **Android Studio** (Güncel Sürüm önerilir)
-- **JDK 17** veya üstü
-- **Android SDK:** `compileSdk 34`
-- **Gradle:** Sürüm `8.x` ve üstü
-
-Projeyi Android Studio'da açıp `Build -> Make Project` diyerek ya da komut satırından `./gradlew assembleDebug` komutuyla doğrudan derleyebilirsiniz.
-
-## Test Edilen Cihazlar
-- **2024 Kove 800X Pro:** Sorunsuz çalışıyor.
-- **2026 Kove Modelleri:** Gelişmiş güvenlik ve strict heartbeat protokolleriyle başarılı şekilde test edildi.
-
----
-
-# 🇬🇧 KoveMirror (English)
-
-(This text and the program itself developed by AI.)
-
-KoveMirror is an open-source Android application that enables screen mirroring from your smartphone directly to the TFT dashboard of Kove 800 motorcycles (like the 800X Pro). Built as an alternative to the official ThinkerRide system, it operates entirely locally over the motorcycle's network.
-
-This allows you to project any navigation or media app of your choice (such as Google Maps, Waze, Kurviger, or Spotify) onto your motorcycle’s screen without restrictions. It also includes an offline-friendly, motorcycle-optimized built-in **2D/3D Map, Route Import (GPX/KML/KMZ), Live Route Weather, Sharp Curve Warnings, Turn-by-Turn Navigation, and Screen-Off Seamless TFT Display** module.
-
-<p align="center">
-  <img src="screenshots/main_screen.png" width="32%" alt="KoveMirror Main Screen" />
-  &nbsp; &nbsp; &nbsp; &nbsp;
-  <img src="screenshots/map_screen.png" width="32%" alt="Map & Route Screen" />
-</p>
-
----
-
-## 🗺️ Map, Route & Navigation Features
-
-Accessible via the **"Map & Route"** button on the main screen:
-
-1. **4 Map Layer Options (2D & 3D)**:
-   - **Maps (OSM)**: OpenStreetMap Mapnik standard vector map.
-   - **Topo**: OpenTopoMap terrain and topographic contours.
-   - **Satellite (Sat)**: ESRI World Imagery high-resolution satellite imagery.
-   - **🌐 3D Vector & Terrain Map (MapLibre)**: Dynamic 3D building, terrain elevation, and riding perspective layer. Switch instantly between 2D and 3D via handlebar buttons or on-screen toggle.
-
-2. **📱 Screen-Off Seamless TFT Navigation (Virtual Display Presentation)**:
-   - Even when your phone screen is turned off or locked, KoveMirror runs an independent background `VirtualDisplay` and `Presentation` map, streaming live GPS positioning, imported routes, and turn-by-turn navigation directly to the motorcycle's TFT screen.
-   - Seamless, real-time bi-directional synchronization when you turn your phone screen back on.
-
-3. **🌤️ Live Route Weather Forecast**:
-   - Integrates with the open-source Open-Meteo API to fetch temperature (°C), rain probability (%), precipitation amount (mm), and wind speed badges along your route.
-   - Badges are layered on top in 2D and 3D maps for crisp readability with tap-for-details support.
-
-4. **⚡ Sharp Curve & Hairpin Warnings**:
-   - 100% offline geometric scan: Analyzes angular deflection and curve radius without internet connection.
-   - Displays color-coded badges directly on curve apexes:
-     - 🔴 **Red (`⚠️`):** Hairpin / U-Turn ($180^\circ$ sharp turns)
-     - 🟠 **Orange (`⬅️` / `➡️`):** Sharp Curve ($90^\circ+$ angles)
-     - 🟡 **Yellow (`↖️` / `↗️`):** Medium Curve
-
-5. **KML / KMZ / GPX Route Import & Tracking**:
-   - Import riding routes in GPX, KML, and KMZ formats.
-   - Customize route lines with 10 preset colors, stroke widths, directional arrows, and kilometer distance markers.
-   - Manage multiple imported routes simultaneously (visibility toggle, reverse route direction, or delete).
-
-6. **📍 Long-Press Destination Selection & Navigation (OSRM Engine)**:
-   - **Long press** anywhere on the map to drop a destination pin and tap **"Start Navigation"**.
-   - **Live Top Turn Banner**: Displays upcoming turn direction arrows (left/right/uturn), distance to next maneuver, and remaining trip distance/ETA.
-
-7. **🏎️ Real-Time Speedometer & Speed Limit Alerts**:
-   - Dynamic real-time GPS speed indicator.
-   - Automatic detection of road speed limits using OpenStreetMap / Overpass data and speeding alert cards.
-
-8. **🔴 Live GPX Track Recorder**:
-   - Record your real-time rides directly into standard GPX files saved on your device.
-
-9. **⚙️ Redesigned Professional Map Settings**:
-   - **Hero Live Preview:** Simulates theme, location cursor shape/color, and GPX track line in real-time.
-   - **Segmented Pill Selector:** Day / Night / Auto map theme (`☀️ Day | 🌙 Night | 🔄 Auto`).
-   - **Visual Cursor Chips:** 5 distinct cursor shapes (`⬆️ Arrow`, `🏍️ Moto`, `🔵 Dot`, `🎯 Target`, `📍 Pin`) with a 7-color palette.
-
----
-
-## ⚡ System & Advanced Features
-
-- **🔋 Energy-Saving Screen Dimming:** Automatically dims or turns down phone screen brightness during mirroring to conserve battery and eliminate phone overheating.
-- **🎮 Handlebar Button Integration & One-Touch Relaunch:** Multi-mode handlebar controls for Zooming, Panning, Media playback, Volume control, App switching, and instantaneous One-Touch stream relaunch (**[ENT]** key) if disconnected while riding.
-- **📱 Secondary Display App Projection:** Multi-display projection using `ActivityOptions.setLaunchDisplayId` to project apps like **DMD2**, **OsmAnd**, or custom navigation tools directly onto the Kove 600×1024 Virtual Display while keeping the phone's primary screen free for Waze or standard phone usage.
-- **🌐 6 Language Support:** Full UI localization for 🇹🇷 Turkish, 🇬🇧 English, 🇪🇸 Spanish, 🇮🇹 Italian, 🇬🇷 Greek, and 🇫🇷 French.
-- **🛡️ Enhanced Stability & BLE MTU 512 Negotiation:** Added BLE `requestMtu(512)` for modern dashboard firmwares (e.g. SV=2.0.4), MediaProjection token caching, robust BLE command queues, wakelock timeout protections, circular log file limits, and hardened TCP socket lifecycle management *(Special thanks to Dominik Ladoš)*.
-
----
-
-## Protocol Structure and Communication
-
-Kove TFT screens use a combination of Bluetooth (BLE) and Wi-Fi (TCP) to negotiate and stream the display:
-
-### 1. Wi-Fi Network
-The motorcycle broadcasts its own Wi-Fi Hotspot (typically with the IP `192.168.10.1`). When the phone connects, it is assigned a local IP (`192.168.10.2`). The app uses Android's `bindProcessToNetwork` API to force all application traffic through the motorcycle's Wi-Fi, allowing the phone to maintain internet connectivity over Mobile Data for other background applications (ensure your phone's "Use mobile data when Wi-Fi has no internet" setting is enabled).
-
-### 2. TCP Ports
-The phone acts as the Server, opening three distinct TCP server sockets that the motorcycle connects to:
-- **Port 17818 (Control Port):** Used for initial binary handshakes, version exchange, and receiving continuous vehicle telemetry.
-- **Port 15456 (Video Port):** The main high-bandwidth socket where the H.264 encoded screen video stream is sent to the TFT.
-- **Port 15457 (Dedicated Heartbeat Port):** A fast-ping socket used to rapidly detect connection drops (pings sent every 200ms).
-
-### 3. Bluetooth (BLE) Handshake
-BLE negotiation is strictly required before the TFT will accept video connections:
-- The app connects to the `0000e0ff-...` Service UUID.
-- It writes to the `FFE1` characteristic and subscribes to notifications on `FFE2`.
-- A `PAIR` command (msg_id: 27) is sent. Once the TFT responds with `result: 1`, the app triggers the mirror activation command (`msg_id: 25, msg_type: 23`).
-
-### 4. Control Handshake & Heartbeat
-- Following BLE activation, the TFT connects to the phone's 17818 Control port.
-- The TFT sends a `TUC` (Token) packet.
-- Binary (Hex) handshakes are exchanged.
-- **Critical for 2026 Models:** For newer Kove models (2026+), the TFT implements a stricter security protocol by continuously sending a 6-byte heartbeat (`02 01 00 00 00 00`) over the Control Port every second. The app must echo this exact heartbeat back immediately; otherwise, the TFT will refuse to open the Video Port.
-
-## Build Instructions
-
-To compile this project, you will need:
-- **Android Studio** (Latest stable version recommended)
-- **JDK 17** or higher
-- **Android SDK:** `compileSdk 34`
-- **Gradle:** Version `8.x` or higher
-
-Open the project in Android Studio and select `Build -> Make Project`, or build directly from the terminal using `./gradlew assembleDebug`.
-
-## Tested Devices
-- **2024 Kove 800X Pro:** Fully compatible.
-- **2026 Kove Models:** Fully compatible (incorporates strict heartbeat echoing and synchronized BLE pair timing).
+- Vrata 15456/17818/15457 se vežejo samo na IP telefona v omrežju motorja in sprejmejo samo prehod motorja.
+- Dostop do obvestil se uporabi izključno za obvestila paketov `com.google.android.apps.maps` in `com.waze`; vsebina se ne shranjuje in ne pošilja nikamor razen na TFT.
+- Zemljevidi, usmerjanje, vreme in iskanje naslovov uporabljajo javne storitve OSM/Open‑Meteo/Nominatim (podedovano iz KoveMirror) – koordinate se pošljejo tem strežnikom.

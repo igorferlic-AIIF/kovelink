@@ -45,8 +45,8 @@ class MainActivity : AppCompatActivity() {
 
     private val uiHandler = Handler(Looper.getMainLooper())
 
-    private val languageCodes = listOf("tr", "en", "el", "es", "it", "fr")
-    private val languageNames = listOf("Türkçe", "English", "Ελληνικά", "Español", "Italiano", "Français")
+    private val languageCodes = listOf("sl", "en", "tr", "el", "es", "it", "fr")
+    private val languageNames = listOf("Slovenščina", "English", "Türkçe", "Ελληνικά", "Español", "Italiano", "Français")
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LocaleHelper.applyLocale(newBase))
@@ -132,7 +132,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupLanguageButton() {
         val currentLang = LocaleHelper.getSavedLanguage(this)
-        val currentIdx = languageCodes.indexOf(currentLang).let { if (it >= 0) it else 0 }
+        // Unknown system language (e.g. German) falls back to English, not to the first entry.
+        val currentIdx = languageCodes.indexOf(currentLang).let { if (it >= 0) it else languageCodes.indexOf("en") }
         val currentLangName = languageNames.getOrNull(currentIdx) ?: "English"
         binding.btnSelectLanguage.text = getString(R.string.btn_select_language, currentLangName)
 
@@ -203,8 +204,9 @@ class MainActivity : AppCompatActivity() {
             Triple("com.thorkracing.dmd2", "🏍️ DMD2 (Drive Mode Dashboard)", isPackageInstalled("com.thorkracing.dmd2")),
             Triple("net.osmand", "🌍 OsmAnd Maps & Navigation", isPackageInstalled("net.osmand")),
             Triple("net.osmand.plus", "🌍 OsmAnd+ Maps & Navigation", isPackageInstalled("net.osmand.plus")),
-            Triple("com.google.android.apps.maps", "🧭 Google Maps", isPackageInstalled("com.google.android.apps.maps")),
-            Triple("com.waze", "🧭 Waze", isPackageInstalled("com.waze")),
+            // Google Maps / Waze are deliberately not listed: Android refuses to launch an
+            // activity without allowEmbedded on a VirtualDisplay owned by another app, so the
+            // launch silently fell back to the internal map. Use "Notification access" instead.
             Triple("menion.android.locus", "🧭 Locus Map", isPackageInstalled("menion.android.locus")),
             Triple("menion.android.locus.pro", "🧭 Locus Map Pro", isPackageInstalled("menion.android.locus.pro")),
             Triple("de.kurviger.pro", "🧭 Kurviger Pro", isPackageInstalled("de.kurviger.pro")),
@@ -285,9 +287,70 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             Toast.makeText(this, getString(R.string.toast_enable_accessibility), Toast.LENGTH_LONG).show()
         }
+
+        binding.btnNotificationAccess.setOnClickListener {
+            if (NavNotificationListener.isEnabled(this)) {
+                Toast.makeText(this, getString(R.string.toast_notification_access_granted), Toast.LENGTH_SHORT).show()
+            } else {
+                try {
+                    startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+                } catch (_: Exception) {
+                    startActivity(Intent(Settings.ACTION_SETTINGS))
+                }
+                Toast.makeText(this, getString(R.string.toast_enable_notification_access), Toast.LENGTH_LONG).show()
+            }
+        }
+
+        binding.btnBatteryOptimization.setOnClickListener {
+            if (isIgnoringBatteryOptimizations()) {
+                Toast.makeText(this, getString(R.string.toast_battery_already_unrestricted), Toast.LENGTH_SHORT).show()
+            } else {
+                try {
+                    @SuppressLint("BatteryLife")
+                    val intent = Intent(
+                        Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
+                        Uri.parse("package:$packageName")
+                    )
+                    startActivity(intent)
+                } catch (_: Exception) {
+                    startActivity(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS))
+                }
+            }
+        }
+    }
+
+    private fun updateVideoFpsLabel() {
+        val fps = MirrorService.getVideoFps(this)
+        val modeName = when (fps) {
+            30 -> getString(R.string.fps_mode_smooth)
+            15 -> getString(R.string.fps_mode_saver)
+            else -> getString(R.string.fps_mode_balanced)
+        }
+        binding.btnVideoFps.text = getString(R.string.btn_video_fps_value, fps, modeName)
+    }
+
+    private fun isIgnoringBatteryOptimizations(): Boolean {
+        val pm = getSystemService(Context.POWER_SERVICE) as? android.os.PowerManager ?: return true
+        return pm.isIgnoringBatteryOptimizations(packageName)
     }
 
     private fun updatePermissionButtonStates() {
+        // Locked-phone navigation helpers (always visible)
+        if (NavNotificationListener.isEnabled(this)) {
+            binding.btnNotificationAccess.setBackgroundColor(Color.parseColor("#2E7D32"))
+            binding.btnNotificationAccess.text = getString(R.string.btn_notification_access_granted)
+        } else {
+            binding.btnNotificationAccess.setBackgroundColor(Color.parseColor("#FF6F00"))
+            binding.btnNotificationAccess.text = getString(R.string.btn_notification_access)
+        }
+        if (isIgnoringBatteryOptimizations()) {
+            binding.btnBatteryOptimization.setBackgroundColor(Color.parseColor("#2E7D32"))
+            binding.btnBatteryOptimization.text = getString(R.string.btn_battery_optimization_granted)
+        } else {
+            binding.btnBatteryOptimization.setBackgroundColor(Color.parseColor("#FF6F00"))
+            binding.btnBatteryOptimization.text = getString(R.string.btn_battery_optimization)
+        }
+
         if (currentAppMode == APP_MODE_CONTROL_ONLY) {
             // Overlay permission
             if (Settings.canDrawOverlays(this)) {
@@ -311,7 +374,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupAboutButton() {
         binding.btnAbout.setOnClickListener {
-            val message = "KoveMirror v${BuildConfig.VERSION_NAME}\n\n" + getString(R.string.about_developer_credit)
+            val message = "${getString(R.string.app_name)} v${BuildConfig.VERSION_NAME}\n\n" + getString(R.string.about_developer_credit)
             AlertDialog.Builder(this)
                 .setTitle(R.string.about_dialog_title)
                 .setMessage(message)
@@ -326,6 +389,19 @@ class MainActivity : AppCompatActivity() {
     private fun setupButtons() {
         binding.btnStartStop.setOnClickListener { onStartStopClick() }
         binding.btnTftPadding.setOnClickListener { showTftPaddingDialog() }
+
+        updateVideoFpsLabel()
+        binding.btnVideoFps.setOnClickListener {
+            val prefs = getSharedPreferences("kove_prefs", MODE_PRIVATE)
+            val cur = MirrorService.getVideoFps(this)
+            val idx = MirrorService.FPS_PRESETS.indexOf(cur)
+            val next = MirrorService.FPS_PRESETS[(idx + 1) % MirrorService.FPS_PRESETS.size]
+            prefs.edit().putInt(MirrorService.PREF_VIDEO_FPS, next).apply()
+            updateVideoFpsLabel()
+            if (isStreaming) {
+                Toast.makeText(this, getString(R.string.toast_fps_applies_next_start), Toast.LENGTH_SHORT).show()
+            }
+        }
         binding.btnScreenDim.setOnClickListener { toggleScreenDim() }
         binding.btnShareLogs.setOnClickListener { shareLogs() }
         binding.btnOpenMap.setOnClickListener {
@@ -891,9 +967,9 @@ private fun showTftPaddingDialog() {
         if (Build.VERSION.SDK_INT >= 31) {
             permissions.add(Manifest.permission.BLUETOOTH_CONNECT)
             permissions.add(Manifest.permission.BLUETOOTH_SCAN)
-        } else {
-            permissions.add(Manifest.permission.ACCESS_FINE_LOCATION)
         }
+        // Location is needed for the TFT map (GPS) and for reading the Wi-Fi SSID.
+        permissions.add(Manifest.permission.ACCESS_FINE_LOCATION)
 
         val missing = permissions.filter {
             ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
@@ -913,7 +989,36 @@ private fun showTftPaddingDialog() {
             } else {
                 DebugLogger.warning(getString(R.string.log_bt_permissions_denied))
             }
+            requestBackgroundLocationIfNeeded()
         }
+    }
+
+    /**
+     * Android 10+ only grants background location in a second, separate request (Android 11+
+     * opens the settings page). Without it the TFT map stops getting GPS once the phone is
+     * locked for a while.
+     */
+    private fun requestBackgroundLocationIfNeeded() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) return
+        val fineGranted = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
+            PackageManager.PERMISSION_GRANTED
+        if (!fineGranted) return
+        val bgGranted = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) ==
+            PackageManager.PERMISSION_GRANTED
+        if (bgGranted) return
+        val prefs = getSharedPreferences("kove_prefs", MODE_PRIVATE)
+        if (prefs.getBoolean("bg_location_asked", false)) return
+        prefs.edit().putBoolean("bg_location_asked", true).apply()
+        AlertDialog.Builder(this)
+            .setTitle(R.string.dialog_bg_location_title)
+            .setMessage(R.string.dialog_bg_location_message)
+            .setPositiveButton(R.string.btn_ok) { _, _ ->
+                ActivityCompat.requestPermissions(
+                    this, arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION), 1000
+                )
+            }
+            .setNegativeButton(R.string.btn_cancel, null)
+            .show()
     }
 
     override fun onDestroy() {

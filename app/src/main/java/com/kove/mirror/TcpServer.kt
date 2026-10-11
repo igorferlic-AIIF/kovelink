@@ -12,10 +12,19 @@ import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicLong
 
 class TcpServer(
+    /**
+     * Local Wi-Fi IP to bind to. Must be a real interface address: KoveLink refuses to listen
+     * on 0.0.0.0, otherwise the phone screen could be streamed to anyone on a shared network.
+     */
     private val hostIp: String?,
     private val width: Int,
     private val height: Int,
     private val videoEnabled: Boolean = true,
+    /**
+     * Only this peer (the bike's TFT, normally the Wi-Fi gateway 192.168.10.1) is allowed to
+     * connect. Any other client is closed immediately.
+     */
+    private val allowedPeerIp: String = DEFAULT_TFT_IP,
     private val onConnected:    (OutputStream) -> Unit,
     private val onDisconnected: () -> Unit
 ) {
@@ -25,6 +34,27 @@ class TcpServer(
         const val PORT_CONTROL = 17818
         const val PORT_HEARTBEAT = 15457
         const val ACCEPT_TIMEOUT_MS = 5000
+        const val DEFAULT_TFT_IP = "192.168.10.1"
+    }
+
+    /** Returns true when the client may talk to us; closes and logs it otherwise. */
+    private fun acceptPeer(socket: Socket, port: Int): Boolean {
+        val peer = socket.inetAddress?.hostAddress ?: ""
+        if (peer == allowedPeerIp) return true
+        DebugLogger.warning("🚫 Rejected connection on port $port from $peer (only $allowedPeerIp is allowed)")
+        try { socket.close() } catch (_: Exception) {}
+        return false
+    }
+
+    private fun bindOrFail(port: Int): ServerSocket {
+        val ip = hostIp
+        if (ip.isNullOrEmpty() || ip == "0.0.0.0") {
+            throw IOException("No Wi-Fi IP address - refusing to bind port $port to all interfaces")
+        }
+        val ss = ServerSocket()
+        ss.reuseAddress = true
+        ss.bind(InetSocketAddress(ip, port))
+        return ss
     }
 
     // ServerSockets
@@ -157,13 +187,7 @@ class TcpServer(
 
     private fun runVideoServer() {
         try {
-            val ss = ServerSocket()
-            ss.reuseAddress = true
-            if (!hostIp.isNullOrEmpty() && hostIp != "0.0.0.0") {
-                ss.bind(InetSocketAddress(hostIp, PORT_VIDEO))
-            } else {
-                ss.bind(InetSocketAddress(PORT_VIDEO))
-            }
+            val ss = bindOrFail(PORT_VIDEO)
             videoServerSocket = ss
 
             DebugLogger.success(R.string.log_video_socket_opened, PORT_VIDEO)
@@ -172,6 +196,7 @@ class TcpServer(
                 try {
                     ss.soTimeout = ACCEPT_TIMEOUT_MS
                     val socket = ss.accept() ?: continue
+                    if (!acceptPeer(socket, PORT_VIDEO)) continue
                     videoClientSocket = socket
 
                     DebugLogger.success(R.string.log_tft_video_connected_ip, socket.inetAddress.hostAddress ?: "", socket.port)
@@ -303,13 +328,7 @@ class TcpServer(
 
     private fun runControlServer() {
         try {
-            val ss = ServerSocket()
-            ss.reuseAddress = true
-            if (!hostIp.isNullOrEmpty() && hostIp != "0.0.0.0") {
-                ss.bind(InetSocketAddress(hostIp, PORT_CONTROL))
-            } else {
-                ss.bind(InetSocketAddress(PORT_CONTROL))
-            }
+            val ss = bindOrFail(PORT_CONTROL)
             controlServerSocket = ss
             DebugLogger.success(R.string.log_control_socket_opened, PORT_CONTROL)
 
@@ -317,6 +336,7 @@ class TcpServer(
                 try {
                     ss.soTimeout = ACCEPT_TIMEOUT_MS
                     val socket = ss.accept() ?: continue
+                    if (!acceptPeer(socket, PORT_CONTROL)) continue
                     controlClientSocket = socket
                     DebugLogger.success(R.string.log_tft_control_connected_ip, socket.inetAddress.hostAddress ?: "", socket.port)
                     handleControlClient(socket)
@@ -539,19 +559,11 @@ class TcpServer(
         DebugLogger.info(R.string.log_binary_handshake_sent)
     }
 
-    private fun startControlHeartbeat(os: OutputStream) {}
-
     // ─── Dedicated Heartbeat Server (Port 15457) ───────────────────
 
     private fun runHeartbeatServer() {
         try {
-            val ss = ServerSocket()
-            ss.reuseAddress = true
-            if (!hostIp.isNullOrEmpty() && hostIp != "0.0.0.0") {
-                ss.bind(InetSocketAddress(hostIp, PORT_HEARTBEAT))
-            } else {
-                ss.bind(InetSocketAddress(PORT_HEARTBEAT))
-            }
+            val ss = bindOrFail(PORT_HEARTBEAT)
             heartbeatServerSocket = ss
             DebugLogger.success(R.string.log_hb_socket_opened, PORT_HEARTBEAT)
 
@@ -559,7 +571,8 @@ class TcpServer(
                 try {
                     ss.soTimeout = ACCEPT_TIMEOUT_MS
                     val socket = ss.accept() ?: continue
-                    
+                    if (!acceptPeer(socket, PORT_HEARTBEAT)) continue
+
                     // Close previous socket if still open
                     try { heartbeatClientSocket?.close() } catch (_: Exception) {}
                     heartbeatClientSocket = socket
